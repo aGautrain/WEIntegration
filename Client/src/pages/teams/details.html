@@ -1,0 +1,45 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-title>
+      Team {{team.name}}
+    </ion-title>
+    <ion-buttons start>
+        <button ion-button (click)="dismiss()">
+            Retour
+        </button>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content padding>
+    
+    <ion-list> 
+        
+        <ion-item class="center">
+            <img class="team-thumbnails" [src]="team.thumbnail">
+        </ion-item>
+        
+        <ion-item class="center">
+            <h2>{{team.nbMembers}} membres • {{team.points}} points</h2>
+        </ion-item>
+        
+        <ion-list>
+            <ion-item *ngFor="let member of team.members">
+                
+                <ion-avatar item-start>
+                    <img [src]="member.thumbnail">
+                </ion-avatar>
+                
+                <p>{{member.firstName}} {{member.name}}</p>
+                
+                <ion-note item-end>
+                    <b>{{member.points}}</b>
+                </ion-note>
+                
+            </ion-item>
+        
+        </ion-list>
+        
+    </ion-list>
+    
+</ion-content>

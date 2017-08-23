@@ -1,0 +1,36 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-title>
+      Détails
+    </ion-title>
+    <ion-buttons start>
+        <button ion-button (click)="dismiss()">
+            Retour
+        </button>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content padding class="challenge-resume">
+    
+    <ion-list> 
+        
+        <ion-item text-wrap>
+            <h1 class="nom">{{challenge.name}}</h1>
+        </ion-item>
+        
+        <ion-item [ngClass]="statutColor()">
+            <ion-icon [name]="statutIcon()"></ion-icon>
+            <h4 class="statut">{{statutText()}}</h4>
+        </ion-item>
+        <ion-item text-wrap>
+            <p class="description">{{challenge.desc}}</p>
+        </ion-item>
+        <ion-item>
+            <h3 [ngClass]="{reward: true, achieved: isObtained()}">{{challenge.reward}}</h3>
+        </ion-item>
+    </ion-list>
+    
+    <button (click)="claim()" [disabled]="!isAvailable()" ion-button full large>Soumettre</button>
+    <button (click)="dismiss()" ion-button full color="light">Revenir à la liste</button>
+</ion-content>

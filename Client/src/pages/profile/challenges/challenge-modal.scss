@@ -1,0 +1,44 @@
+.challenge-resume {
+    
+    
+    ion-item {
+        text-align: center;
+    }
+    
+    .nom {
+        font-size: 200%;
+    }
+    
+    .statut {
+        font-size: 85%;
+        text-transform: lowercase;
+        font-weight: normal;
+    }
+    
+    .success { color: green;}
+    .failure { color: red;}
+    .waiting { color: gray;}
+    
+    ion-icon {
+        font-size: 48px;
+    }
+    
+    .description {
+        padding-top: 50px;
+        margin-bottom: 50px;
+        font-size: 150%;
+    }
+    
+    .reward {
+        font-size: 100%;
+    }
+    
+    .achieved {
+        text-decoration: line-through;
+    }
+    
+    button {
+        margin-bottom: 20px;
+    }
+
+}

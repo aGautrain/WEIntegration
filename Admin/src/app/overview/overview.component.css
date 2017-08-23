@@ -1,0 +1,52 @@
+:host h1
+{
+    padding: 30px;
+    font-size: 150%;
+    font-weight: bold;
+}
+
+:host h1 i
+{
+    display: inline-block;
+    margin-right: 10px;
+}
+
+:host article
+{
+    margin-top: 50px;
+    margin-bottom: 50px;
+}
+
+:host article p
+{
+    text-align: center;
+    font-size: 110%;
+}
+
+
+
+
+
+:host .challenges-todo tbody tr
+{
+    position: relative;
+}
+
+:host .challenges-todo--selector
+{
+    position: absolute;
+    left: -20px;
+    top: 3px;
+    font-size: 150%;
+    opacity: 0;
+}
+
+:host .challenges-todo tbody tr:hover
+{
+    cursor: pointer;
+}
+
+:host .challenges-todo tbody tr:hover .challenges-todo--selector
+{
+    opacity: 1;
+}

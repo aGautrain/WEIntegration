@@ -1,0 +1,26 @@
+<ion-header>
+  <ion-navbar>
+    <ion-title>
+      Mon profil
+    </ion-title>
+  </ion-navbar>
+</ion-header>
+
+<ion-content padding class="card-background-page">
+
+  <ion-card (click)="openOverview()">
+    <div class="card-title">Aperçu</div>
+    <div class="card-subtitle">Quelle est mon utilité ?</div>
+  </ion-card>
+
+  <ion-card (click)="openJournal()">
+    <div class="card-title">Journal</div>
+    <div class="card-subtitle">Dernières actions effectuées</div>
+  </ion-card>
+
+  <ion-card (click)="openChallenges()">
+    <div class="card-title">Challenges</div>
+    <div class="card-subtitle">Demandes &amp; Récompenses</div>
+  </ion-card>
+    
+</ion-content>

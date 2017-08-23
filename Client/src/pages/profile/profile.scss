@@ -1,0 +1,30 @@
+.card-background-page {
+
+  ion-card {
+    position: relative;
+    text-align: center;
+    background-color: #222222;
+    padding: 50px;
+    transition: 0.2s;
+  }
+    
+    ion-card:hover {
+        cursor: pointer;
+        box-shadow: 2px 2px 2px gray;
+    }
+
+  .card-title {
+    font-size: 2.0em;
+    font-weight: bold;
+    color: #fff;
+  }
+
+  .card-subtitle {
+    font-size: 1.0em;
+    width: 100%;
+    color: #fff;
+  }
+    
+
+
+}

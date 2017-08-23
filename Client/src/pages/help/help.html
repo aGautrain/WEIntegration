@@ -1,0 +1,17 @@
+<ion-header>
+  <ion-navbar>
+    <ion-title>C'est quoi cette merde</ion-title>
+  </ion-navbar>
+</ion-header>
+
+<ion-content padding class="page-help">
+
+    <ion-slides pager>
+        <ion-slide *ngFor="let slide of slides">
+            <h2 class="slide-title">{{slide.title}}</h2>
+            <p>{{slide.text}}</p>
+        </ion-slide>  
+    </ion-slides>
+    
+    
+</ion-content>

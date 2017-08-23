@@ -1,0 +1,27 @@
+profile-overview {
+    
+    
+    .team-title {
+        text-align: center;
+        font-family: 'Mogra', cursive;
+        font-size: 3em;
+    }
+    
+    .player-pics  {     
+        width:100% !important;  
+        height : 100% !important;  
+        max-width: 100px !important;  //any size
+        max-height: 100px !important; //any size
+    }
+    
+    
+    h3 {
+        color: dimgray;
+    }
+    
+    .team-img
+    {
+        display: block;
+        margin: auto;
+    }
+}

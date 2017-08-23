@@ -1,0 +1,27 @@
+<ion-header>
+    <ion-navbar>
+      <ion-title>Aperçu</ion-title>
+    </ion-navbar>
+</ion-header>
+
+<ion-content no-padding>
+    
+    <ion-grid no-padding>
+        <ion-row no-padding>
+            <ion-col no-padding>
+                <img [src]="player?.team?.thumbnail" class="team-img"/>
+            </ion-col>
+        </ion-row>
+        <ion-row>
+            <ion-col><h1 class="team-title">Team {{player?.team?.name}}</h1></ion-col>
+        </ion-row>
+    </ion-grid>
+    
+    <ion-item>
+        <h1>{{player?.firstName}}</h1>
+        <h2>{{player?.name}}</h2>
+        <h3>~ {{player?.points}} points gagnés</h3>
+        <ion-avatar item-start><img class="player-pics" [src]="player?.thumbnail"></ion-avatar>
+    </ion-item>
+    
+</ion-content>

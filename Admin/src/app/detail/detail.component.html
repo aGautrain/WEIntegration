@@ -1,0 +1,44 @@
+<article div class="col-xs-6 col-xs-offset-3">
+    
+    <div class="form-group">
+        <label class="control-label">Nom du challenge :</label>
+        <h1>{{ claimExamined?.challenge?.name}}</h1>
+    </div>
+    
+    <div class="form-group">
+        <label class="control-label">Description du challenge :</label>
+        <h3>{{ claimExamined?.challenge?.desc}}</h3>
+    </div>
+    
+    <div class="form-group">
+        <label class="control-label">Récompense du challenge :</label>
+        <p>{{ claimExamined?.challenge?.reward}} points</p>
+    </div>
+    
+    <div class="form-group">
+      <label class="control-label">Commentaire du joueur :</label>
+        <p>{{ claimExamined?.claimerComment }}</p>
+    </div>
+    
+    <div class="form-group">
+      <label class="control-label">Autres infos :</label>
+        <ul>
+            <li><i class="fa fa-user"></i> {{ claimExamined?.claimer }}</li>
+            <li *ngIf="claimExamined.createdAt"><i class="fa fa-calendar"></i> {{ claimExamined?.createdAt }}</li>
+            <li><i class="fa fa-key"></i> {{ claimExamined?.id }}</li>
+        </ul>
+    </div>
+    
+    <div class="separator-horizontal"></div>
+    
+    <div class="form-group">
+      <label class="control-label" for="solverComment">Votre commentaire (facultatif) :</label>
+      <input class="form-control" [(ngModel)]="claimExamined.solverComment" name="solverComment" type="text">
+    </div>
+
+    <div class="text-right">
+        <a (click)="deny()" class="btn btn-danger">Refuser</a>
+        <a (click)="validate()" class="btn btn-success">Valider</a>
+    </div>
+
+</article>
