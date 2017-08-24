@@ -22,6 +22,11 @@ module.exports = {
 		  required: true,
 		  defaultsTo: false
 	  },
+	  resolution: {
+		  type: 'string',
+		  required: true,
+		  defaultsTo: 'waiting'
+	  },
 	  claimerComment: {
 		  type: 'text',
 		  required: false
@@ -61,13 +66,14 @@ module.exports = {
 		})
 		.exec(function (err, claim){
 			if(err) return cb(err);
-			if(claim) return cb(new Error('You\'ve already claimed that challenge'));
+			if(claim) return cb(new Error('Challenge déjà réclamé !'));
 			
 			// If can claim (not treating the collective challenges yet) :
 			Claim.create({
 				claimer: inputPlayer,
 				challenge: inputChall,
 				resolved: false,
+				resolution: "waiting",
 				claimerComment: "Not implemented",
 				solverComment: "",
 				claimerProof: "Not implemented"
@@ -80,7 +86,7 @@ module.exports = {
 				})
 				.exec(function (err, player){
 					if(err) return cb(err);
-					if(!player) return cb(new Error('No player found'));
+					if(!player) return cb(new Error('Joueur introuvable.'));
 					
 					// transfer here
 					player.challengesTodo.remove(inputChall);
@@ -97,6 +103,124 @@ module.exports = {
 				
 			});
 		});
+  },
+  
+  acceptClaim: function(opts, cb){
+		if(!opts) {
+				err = new Error();
+				err.message = 'FATAL ERROR : api/models/Claim.js acceptClaim() no opts provided';
+				err.status = 404;
+				return cb(err);
+		}
+		
+		var inputPlayer = opts.player;
+		var inputClaim = opts.claim;
+		
+		sails.log.debug('Static method acceptClaim invoked with : player#' + inputPlayer + ' and claim#' + inputClaim);
+		
+		Claim
+		.findOne()
+		.where({
+			id: inputClaim,
+			resolved: false
+		})
+		.exec(function(err, claim){
+			if(err) return cb(err);
+			if(!claim) return cb(new Error('Demande inexistante ou bien déjà traitée !'));
+			
+			var updatedClaim = claim;
+			updatedClaim.resolved = true;
+			updatedClaim.resolution = "accepted";
+			
+			// We can now accept it (update record)
+			Claim
+			.update({id: inputClaim}, updatedClaim)
+			.exec(function (err, updated){
+				if(err) return cb(err);
+				if(!updated) return cb(new Error('Erreur lors de la validation'));
+				
+				// And then transfer the challenge of the player concerned
+				Player
+				.findOne({
+					id: inputPlayer
+				})
+				.exec(function(err,player){
+					if(err) return cb(err);
+					if(!player) return cb(new Error('Joueur introuvable.'));
+					
+					player.challengesDoing.remove(claim.challenge);
+					player.challengesDone.add(claim.challenge);
+					player.save(function(err){
+						if(err) return cb(err);
+						
+						sails.log.info('Claim successfuly accepted');
+						return cb(null,updated);
+						
+					});
+				});
+				
+			});
+		});
+		
+  },
+  
+  refuseClaim: function(opts, cb){
+		if(!opts) {
+				err = new Error();
+				err.message = 'FATAL ERROR : api/models/Claim.js acceptClaim() no opts provided';
+				err.status = 404;
+				return cb(err);
+		}
+		
+		var inputPlayer = opts.player;
+		var inputClaim = opts.claim;
+		
+		sails.log.debug('Static method refuseClaim invoked with : player#' + inputPlayer + ' and claim#' + inputClaim);
+		
+		Claim
+		.findOne()
+		.where({
+			id: inputClaim,
+			resolved: false
+		})
+		.exec(function(err, claim){
+			if(err) return cb(err);
+			if(!claim) return cb(new Error('Demande inexistante ou bien déjà traitée !'));
+			
+			var updatedClaim = claim;
+			updatedClaim.resolved = true;
+			updatedClaim.resolution = "refused";
+			
+			// We can now accept it (update record)
+			Claim
+			.update({id: inputClaim}, updatedClaim)
+			.exec(function (err, updated){
+				if(err) return cb(err);
+				if(!updated) return cb(new Error('Erreur lors du refus'));
+				
+				// And then transfer the challenge of the player concerned
+				Player
+				.findOne({
+					id: inputPlayer
+				})
+				.exec(function(err,player){
+					if(err) return cb(err);
+					if(!player) return cb(new Error('Joueur introuvable.'));
+					
+					player.challengesDoing.remove(claim.challenge);
+					player.challengesTodo.add(claim.challenge);
+					player.save(function(err){
+						if(err) return cb(err);
+						
+						sails.log.info('Claim successfuly refused');
+						return cb(null,updated);
+						
+					});
+				});
+				
+			});
+		});
+		
   }
 };
 

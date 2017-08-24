@@ -1,76 +1,60 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
+import { AdminService } from '../admin.service';
+import {
+    Claim,
+    Player,
+    Challenge
+} from '../interfaces';
 
-export interface Claim {
-    claimer: string;
-    challenge: ChallengeInterface | any;
-    resolved: boolean;
-    claimerComment: string;
-    solverComment: string;
-    claimerProof: string;
-    id: string;
-}
-
-interface ChallengeInterface {
-    name: string;
-    desc: string;
-    collective: boolean;
-    category: string;
-    thumbnail?: string;
-    reward: number;
-    createdAt?: Date;
-    updatedAt?: Date;
-    
-    status?: ChallengeState;
-}
-
-enum ChallengeState {
-    pending,
-    obtained,
-    available
-}
 
 @Component({
-  selector: 'app-detail',
-  templateUrl: './detail.component.html',
-  styleUrls: ['./detail.component.css']
+    selector: 'app-detail',
+    templateUrl: './detail.component.html',
+    styleUrls: ['./detail.component.css']
 })
 export class DetailComponent implements OnInit {
-    
-  claimExamined: Claim;
 
-  constructor(private router: Router) { }
+    claimExamined: Claim = null;
 
-  ngOnInit() {
-      
-      this.claimExamined = {
-          claimer: "Antoine",
-          challenge: {
-              name: "FACIIIILE",
-              desc: "Un challenge bidon pour tester l'affichage",
-              collective: false,
-              category: "Hot",
-              reward: 10,
-              status: ChallengeState.pending
-          },
-          resolved: false,
-          claimerComment: "Ce serait sympa d'accepter",
-          solverComment: "",
-          claimerProof: "Aucune.",
-          id: "x79vaez1"
-      };
-  }
-    
-    deny(): void {
-        if(confirm('Êtes-vous sur ? Le refus ne peut être annulé !')){
+    constructor(private router: Router, private api: AdminService) {}
+
+    ngOnInit(): void {
+        // todo: read parameters
+        if (this.api.getEdited() === undefined || this.api.getEdited() === null) {
             this.router.navigate(['/']);
         }
-        
+        this.claimExamined = this.api.getEdited();
     }
-    
+
+    deny(): void {
+        if (confirm('Êtes-vous sur ? Le refus ne peut être annulé !')) {
+            this.api.refuse().then(
+                res => {
+                    console.log('Well refused');
+                    this.router.navigate(['/']);
+                },
+                err => {
+                    console.log('Error while refusing');
+                    alert(err);
+                }
+            );
+        }
+
+    }
+
     validate(): void {
-        if(confirm('Êtes-vous sûr ? La validation ne peut être annulée !')){
-            this.router.navigate(['/']);
+        if (confirm('Êtes-vous sûr ? La validation ne peut être annulée !')) {
+            this.api.accept().then(
+                res => {
+                    console.log('Well accepted');
+                    this.router.navigate(['/']);
+                },
+                err => {
+                    console.log('Error while accepting');
+                    alert(err);
+                }
+            ); 
         }
     }
 }

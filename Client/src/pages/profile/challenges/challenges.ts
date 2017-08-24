@@ -22,6 +22,10 @@ export class ChallengesPage {
     }
 
     ionViewWillEnter(): void {
+        this.loadChallenges();
+    }
+
+    loadChallenges(): void {
         this.initMap();
         
         this.accountHandler.me().then(
@@ -91,6 +95,11 @@ export class ChallengesPage {
 
     openChall(chall: ChallengeInterface) {
         let modal = this.modalCtrl.create(ChallModal, {chall: chall});
+        
+        modal.onDidDismiss(() => {
+           // requesting challenges
+            this.loadChallenges();
+        });
         modal.present();
     }
     

@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { NavParams, Platform, ViewController } from 'ionic-angular';
+import { NavParams, Platform, ViewController, AlertController } from 'ionic-angular';
 import { ChallengeInterface, ChallengeState } from '../../../api/interfaces.service';
 import { TeamManagerService } from '../../../api/manager.service';
 import { AccountHandlerService } from '../../../api/account.service';
@@ -14,6 +14,7 @@ export class ChallModal {
     constructor(public platform: Platform,
                 public params: NavParams,
                 public viewCtrl: ViewController,
+                public alertCtrl: AlertController,
                 private manager: TeamManagerService,
                 private account: AccountHandlerService) {
       
@@ -82,10 +83,31 @@ export class ChallModal {
     }
     
     claim(): void {
+        
+        
+        
+        
+        
         if(this.isAvailable()){
             this.manager.claim(this.challenge.name, this.account.getId()).then(
-                res => { console.log('RES', res); this.dismiss() },
-                err => { console.log('ERR', err); }
+                res => { 
+                    let success = this.alertCtrl.create({
+                        title: 'Succès',
+                        subTitle: 'Bien reçu capitaine !',
+                        buttons: ['OK']
+                    });
+                    success.present();
+                    this.dismiss(); 
+                },
+                err => {
+                    let failure = this.alertCtrl.create({
+                        title: 'Echec',
+                        subTitle: err._body,
+                        buttons: ['Compris']
+                    });
+                    console.log('ERR', err);
+                    failure.present();
+                }
             );
         }
     }

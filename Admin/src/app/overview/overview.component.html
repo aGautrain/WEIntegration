@@ -16,33 +16,12 @@
         </tr>
       </thead>
       <tbody>
-        <tr (click)="verify()">
+        <tr *ngFor="let claim of waitingClaims()" (click)="verify(claim)">
           
-          <td>1</td>
-          <td>Column content</td>
-          <td>Column content</td>
-          <td>Column content</td>
-          <div class="challenges-todo--selector">
-            <i class="fa fa-chevron-right" aria-hidden="true"></i>  
-          </div>
-        </tr>
-        
-        <tr (click)="verify()">
-          
-          <td>2</td>
-          <td>Column content</td>
-          <td>Column content</td>
-          <td>Column content</td>
-          <div class="challenges-todo--selector">
-            <i class="fa fa-chevron-right" aria-hidden="true"></i>  
-          </div>
-        </tr>
-        <tr (click)="verify()">
-          
-          <td>3</td>
-          <td>Column content</td>
-          <td>Column content</td>
-          <td>Column content</td>
+          <td>{{claim?.id}}</td>
+          <td>{{claim?.challenge?.name}}</td>
+          <td>{{claim?.claimer?.firstName}} {{claim?.claimer?.name}}</td>
+          <td>{{claim?.createdAt | date: 'HH:mm:ss, le dd/MM'}}</td>
           <div class="challenges-todo--selector">
             <i class="fa fa-chevron-right" aria-hidden="true"></i>  
           </div>
@@ -71,47 +50,11 @@
         </tr>
       </thead>
       <tbody>
-        <tr class="success">
-          <td>1</td>
-          <td>Column content</td>
-          <td>Column content</td>
-          <td>Column content</td>
-        </tr>
-        <tr class="success">
-          <td>2</td>
-          <td>Column content</td>
-          <td>Column content</td>
-          <td>Column content</td>
-        </tr>
-        <tr class="danger">
-          <td>3</td>
-          <td>Column content</td>
-          <td>Column content</td>
-          <td>Column content</td>
-        </tr>
-        <tr class="success">
-          <td>4</td>
-          <td>Column content</td>
-          <td>Column content</td>
-          <td>Column content</td>
-        </tr>
-        <tr class="danger">
-          <td>5</td>
-          <td>Column content</td>
-          <td>Column content</td>
-          <td>Column content</td>
-        </tr>
-        <tr class="danger">
-          <td>6</td>
-          <td>Column content</td>
-          <td>Column content</td>
-          <td>Column content</td>
-        </tr>
-        <tr class="danger">
-          <td>7</td>
-          <td>Column content</td>
-          <td>Column content</td>
-          <td>Column content</td>
+        <tr *ngFor="let claim of resolvedClaims()" [ngClass]="{'success': isAccepted(claim), 'danger': isRefused(claim)}">
+          <td>{{claim?.id}}</td>
+          <td>{{claim?.challenge?.name}}</td>
+          <td>{{claim?.claimer?.firstName}} {{claim?.claimer?.name}}</td>
+          <td>{{claim?.createdAt | date: 'HH:mm:ss, le dd/MM'}}</td>
         </tr>
       </tbody>
     </table>

@@ -1,0 +1,208 @@
+{
+	"variables": [],
+	"info": {
+		"name": "ESIR-INTEGRATION",
+		"_postman_id": "46517108-fbf6-2cf2-6e4d-05fe7b2c1c9a",
+		"description": "Requests for testing the server and showing how it will work",
+		"schema": "https://schema.getpostman.com/json/collection/v2.0.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "Get teams (user view)",
+			"request": {
+				"url": "192.168.0.12:1337/team/getTeams",
+				"method": "GET",
+				"header": [],
+				"body": {},
+				"description": ""
+			},
+			"response": []
+		},
+		{
+			"name": "Get all players (blueprint view)",
+			"request": {
+				"url": "192.168.0.12:1337/player/",
+				"method": "GET",
+				"header": [],
+				"body": {},
+				"description": ""
+			},
+			"response": []
+		},
+		{
+			"name": "Register a user",
+			"request": {
+				"url": "192.168.0.12:1337/account/registerUser",
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"description": ""
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n\t\"email\":\"abc\",\n\t\"password\":\"123\",\n\t\"name\":\"LABRUE\",\n\t\"firstName\":\"Gwendal\",\n\t\"thumbnail\":\"http://www.thorigne-tt.fr/webping/membres/2016/gwendallabrue.jpg\",\n\t\"team\":\"ToyStory\"\n}"
+				},
+				"description": ""
+			},
+			"response": []
+		},
+		{
+			"name": "Login a user",
+			"request": {
+				"url": "192.168.0.12:1337/player/login",
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"description": ""
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n\t\"password\": \"b\",\n\t\"email\": \"a\"\n}"
+				},
+				"description": "with a password + email"
+			},
+			"response": []
+		},
+		{
+			"name": "Get user state",
+			"request": {
+				"url": "192.168.0.12:1337/player/state",
+				"method": "GET",
+				"header": [],
+				"body": {},
+				"description": "Logged in or out and the session id"
+			},
+			"response": []
+		},
+		{
+			"name": "Get user details",
+			"request": {
+				"url": "192.168.0.12:1337/player/me",
+				"method": "GET",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"description": "",
+						"disabled": true
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n\t\"password\": \"123\",\n\t\"email\": \"abc\"\n}"
+				},
+				"description": "Assumption: the user has logged in"
+			},
+			"response": []
+		},
+		{
+			"name": "Get user details (cookie-less fix)",
+			"request": {
+				"url": {
+					"raw": "192.168.0.12:1337/player/me?id=1582",
+					"host": [
+						"192",
+						"168",
+						"0",
+						"12"
+					],
+					"port": "1337",
+					"path": [
+						"player",
+						"me"
+					],
+					"query": [
+						{
+							"key": "id",
+							"value": "1582",
+							"equals": true,
+							"description": ""
+						}
+					],
+					"variable": []
+				},
+				"method": "GET",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/x-www-form-urlencoded",
+						"description": "",
+						"disabled": true
+					}
+				],
+				"body": {
+					"mode": "formdata",
+					"formdata": [
+						{
+							"key": "id",
+							"value": "1582",
+							"description": "",
+							"type": "text"
+						}
+					]
+				},
+				"description": ""
+			},
+			"response": []
+		},
+		{
+			"name": "Logout a user",
+			"request": {
+				"url": "192.168.0.12:1337/player/logout",
+				"method": "PUT",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": ""
+				},
+				"description": ""
+			},
+			"response": []
+		},
+		{
+			"name": "Claiming a challenge",
+			"request": {
+				"url": {
+					"raw": "192.168.0.12:1337/claim/claim?id=1702&challenge=Participer tu devras",
+					"host": [
+						"192",
+						"168",
+						"0",
+						"12"
+					],
+					"port": "1337",
+					"path": [
+						"claim",
+						"claim"
+					],
+					"query": [
+						{
+							"key": "id",
+							"value": "1702",
+							"equals": true,
+							"description": ""
+						},
+						{
+							"key": "challenge",
+							"value": "Participer tu devras",
+							"equals": true,
+							"description": ""
+						}
+					],
+					"variable": []
+				},
+				"method": "POST",
+				"header": [],
+				"body": {},
+				"description": ""
+			},
+			"response": []
+		}
+	]
+}

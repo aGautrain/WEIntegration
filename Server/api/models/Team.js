@@ -125,21 +125,21 @@ module.exports = {
 						players[b].score += players[b].challengesDone[c].reward;
 					}
 					
-					var randomScore = Math.round(Math.random()*10);
+					// var randomScore = Math.round(Math.random()*10);
 					
 					// On ajoute ensuite au dictionnaire le joueur
 					// Sans oublier d'incrémenter le score de son équipe
 					teamsRepresentation[players[b].team].members.push({
 						firstName: players[b].firstName,
 						name: players[b].name,
-						// points: players[b].score,
-						points: randomScore,
+						points: players[b].score,
+						// points: randomScore,
 						team: players[b].team,
 						thumbnail: players[b].thumbnail
 					});
 					
-					// teamsRepresentation[players[b].team].points += players[b].score;
-					teamsRepresentation[players[b].team].points += randomScore;
+					teamsRepresentation[players[b].team].points += players[b].score;
+					// teamsRepresentation[players[b].team].points += randomScore;
 				}
 				
 				// On réorganise le dictionnaire par convénience

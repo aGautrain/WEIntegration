@@ -23,9 +23,9 @@
     <div class="form-group">
       <label class="control-label">Autres infos :</label>
         <ul>
-            <li><i class="fa fa-user"></i> {{ claimExamined?.claimer }}</li>
-            <li *ngIf="claimExamined.createdAt"><i class="fa fa-calendar"></i> {{ claimExamined?.createdAt }}</li>
-            <li><i class="fa fa-key"></i> {{ claimExamined?.id }}</li>
+            <li><i class="fa fa-user"></i> {{ claimExamined?.claimer?.firstName }} {{ claimExamined?.claimer?.name }} </li>
+            <li *ngIf="claimExamined.createdAt"><i class="fa fa-calendar"></i> {{ claimExamined?.createdAt | date: 'HH:mm:ss, le dd/MM' }} </li>
+            <li><i class="fa fa-key"></i> {{ claimExamined?.id }} </li>
         </ul>
     </div>
     

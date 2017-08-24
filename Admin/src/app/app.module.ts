@@ -8,6 +8,7 @@ import { AppComponent } from './app.component';
 import { OverviewComponent } from './overview/overview.component';
 import { DetailComponent } from './detail/detail.component';
 
+import { AdminService } from './admin.service';
 
 const appRoutes: Routes = [
     {
@@ -33,7 +34,7 @@ const appRoutes: Routes = [
     HttpModule,
     RouterModule.forRoot(appRoutes)
   ],
-  providers: [],
+  providers: [AdminService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
