@@ -28,7 +28,7 @@ module.exports.bootstrap = function(cb) {
 			category: 'Vie de l\'école',
 			collective: false,
 			reward: 5
-		},/*
+		},
 		{
 			name: 'Rendre visite à un Club',
 			desc: 'Chaque visite de club te rapportera les points !',
@@ -49,7 +49,7 @@ module.exports.bootstrap = function(cb) {
 			category: 'Vie de l\'école',
 			collective: false,
 			reward: 20
-		},*/
+		},
 		// SOCIAL
 		{
 			name: 'Isati l\'istati, mon copain <3',
@@ -64,7 +64,7 @@ module.exports.bootstrap = function(cb) {
 			category: 'Social',
 			collective: false,
 			reward: 2
-		},/*
+		},
 		{
 			name: 'Au point où on en est',
 			desc: 'Suivre l\'ESIR sur un max de réseaux sociaux. Sauf Google Plus.',
@@ -141,7 +141,7 @@ module.exports.bootstrap = function(cb) {
 			category: 'Social',
 			collective: false,
 			reward: 50
-		},*/
+		},
 		// EN EQUIPE
 		{
 			name: 'Autographes à gogo',
@@ -179,6 +179,239 @@ module.exports.bootstrap = function(cb) {
 			category: 'Hot',
 			reward: 15,
 			collective: false
+		},
+		// GIVEN CHALLS
+			//Social
+		{
+		name:'Quelqu\'un aurait une enveloppe a but contraceptifsvp?',
+		desc:'Faire une annonce dans le RU pour demander une capote(preuve a l\'appui, +3 points si obtention',
+		category:'Social',
+		collective:false,
+		reward:5 
+		},
+			{
+		name:'Hommage à Bézu',
+		desc:'Lancer une queuleuleu de plus de 50 personnes, place des lices (preuve à l\'appui',
+		category:'Social',
+		collective:true,
+		reward:7
+		},
+			{
+		name:'PAQUITO PAQUITO PAQUITO',
+		desc:'Lancer un paquito de 25 personnes ou plus (preuve à l\'appui)',
+		category:'Social',
+		collective:true,
+		reward:20
+		},
+			{
+		name:'Hey Mademoiselle !!',
+		desc:'Faire oter le soutien-gorge d\'une inconnue dans la rue ou un bar (preuve à l\'appui)',
+		category:'Social',
+		collective:false,
+		reward:7
+		},
+			{
+		name:'Répandons l\'amour! et la mononucléose...',
+		desc:'se faire embrasser par un/une inconnu/e (preuve à l\'appui)',
+		category:'Social',
+		collective:false,
+		reward:7
+		},
+		{
+		name:'ultra sociaux',
+		desc:'Compléter toutes les missions de la catégorie Social',
+		category:'Social',
+		collective:true,
+		reward:25
+		},
+		{
+		name:'Autographes à gogo',
+		desc:'Pars à la rencontre des écoles du campus, aggro, insa,chimie, supélec et récolte le plus de signatures possible... sur ton corps (preuve à l\'appui) 20 points max par personne, 1 point/ signature',
+		category:'En équipe',
+		collective:false,
+		reward:1
+		},
+			{
+		name:'jogging découverte',
+		desc:'courir autour du campus en sous-vêtements 5 pts / personne si équipe au complet',
+		category:'En équipe',
+		collective:false,
+		reward:15
+		},
+			{
+		name:'cohésion vestimentaire',
+		desc:'Montrez nous que votre équipe est soudée en venant tous habillés pareil (à quelques choses près) à l\'ESIR ou en soirée (preuve à l\'appui)',
+		category:'En équipe',
+		collective:true,
+		reward:7
+		},
+			{
+		name:'Ca a l\'air intéressant ce que tu apprends...',
+		desc:'Se tromper d\'amphi... de bâtiment... d\'école? Assister à un cours dans un amphi d\'une autre école du campus (preuve à l\'appui). Points selon créativité',
+		category:'En équipe',
+		collective:false,
+		reward:0
+		},
+			{
+		name:'Ce n\'est pas si mal le bleu',
+		desc:'l\'équipe doit porter haut et fort les couleurs de l\'école pendant les soirées',
+		category:'En équipe',
+		collective:true,
+		reward:6
+		},
+		/*	{
+		name:'On aurait du choisir architecture',
+		desc:'Faire une pyramide humaine de 3 étages (preuve à l\'appui)',
+		category:
+		collective:
+		reward:
+		},*/
+		/*	{
+		name:'Sexy car wash',
+		desc:'Laver une voiture(de préférence celle de ton chef  d\'équipe) de façon très sexy, En équipe (preuve à l\'appui)',
+		category:'En équipe'
+		collective:true,
+		reward:
+		},*/
+			{
+		name:'Venez comme vous êtes',
+		desc:'Rentrez dans un bar du centre-ville déquisé (prevue à l\'appui)',
+		category:'En équipe',
+		collective:false,
+		reward:0
+		},
+		/*	{
+		name:'Liés à tout jamais',
+		desc:'Participe à une soirée de la soif avec ton équipe, le tout en étant tous attachés par les pieds.',
+		category:'En équipe',
+		collective:true,
+		reward:
+		},*/
+			{
+		name:'On nous appelle les Avengers!',
+		desc:'Réaliser tous les défis de la catégorie En équipe',
+		category:'En équipe',
+		collective:true,
+		reward:20
+		},
+			{
+		name:'En sortant de la douche',
+		desc:'Akker à une soirée place des lices un jeudi soir en peignoir (preuve à l\'appui)',
+		category:'Beauf',
+		collective:false,
+		reward:20
+		},
+			{
+		name:'Préparation à l\'iron man',
+		desc:'Faire 15 pompes au milieu de la foule sur la place des Lices un jeudi soir (preuve à l\'appui, 1 max par équipe)',
+		category:'Beauf',
+		collective:false,
+		reward:15
+		},
+		/*	{
+		name:'Lecture coquine',
+		desc:'Simuler un orgasme à la BU',
+		category:'Beauf',
+		collective:false
+		reward:
+		},*/
+			{
+		name:'On a le style ou on ne l\'a pas',
+		desc:'Aller en ville en borat (preuve à l\'appui)',
+		category:'Beauf',
+		collective:false,
+		reward:20
+		},
+			{
+		name:'On est en bretagne j\'avais peur qu\'il pleuve',
+		desc:'Aller dans un supermarché en combinaison de plongé ou en tenue de plage(preuve à l\'appui)',
+		category:'Beauf',
+		collective:false,
+		reward:15
+		},
+			{
+		name:'Pêcher un poisson à la poissonerie',
+		desc:'Je crois qu\'un titre ne pourra être plus explicite.N\'oublie pas ta canne à pêche(prevue à l\'appui)',
+		category:'Beauf',
+		collective:false,
+		reward:15
+		},
+			{
+		name:'Hey Macarena!',
+		desc:'Faire une macarena au RU ou dans le hall de l\'ESIR (preuve à l\'appui) 2 points bonus si équipe complète',
+		category:'Beauf',
+		collective:true,
+		reward:8
+		},
+			{
+		name:'La beauf attitude',
+		desc:'Réaliser tous les défis de la catégorie Beauf',
+		category:'Beauf',
+		collective:true,
+		reward:20
+		},
+			{
+		name:'Les dieux de l\'ESIR',
+		desc:'Prendre une photo type Dieux du stade',
+		category:'Hot',
+		collective:false,
+		reward:0
+		},
+			{
+		name:'Je suis sexy en selfie!',
+		desc:'Participer au concours du selfie le plus sexy-beauf ! ',
+		category:'Hot',
+		collective:false,
+		reward:0
+		},
+			{
+		name:'Il fait chaud ici',
+		desc:'Se baigner dans une fontaine de la ville (preuve à l\'appui)',
+		category:'Hot',
+		collective:true,
+		reward:15
+		},
+			{
+		name:'Bain moussant',
+		desc:'Tout pareil que le dernier défi mais en rajoutant un peu de mousse',
+		category:'Hot',
+		collective:true,
+		reward:10
+		},
+			{
+		name:'Tous en sous-vêtements',
+		desc:'Prendre une photo de l\'équipe en sous vêtements',
+		category:'Hot',
+		collective:true,
+		reward:30
+		},
+			{
+		name:'Le défi ultime: le challenge des lices!',
+		desc:'Se faire prendre en photo nue en haut de l\'horloge place des lices',
+		category:'Hot',
+		collective:false,
+		reward:50
+		},
+		{
+		name:'Eske tu bèz?!',
+		desc:'Un(e) Esirien(ne) demande à un(e) parfait(e) inconnu(e) si il(elle) veut coucher avec lui(elle) tout en restant le plus sérieux possible (preuve à l\'appui)',
+		category:'Hot',
+		collective:false,
+		reward:0
+		},
+			{
+		name:'Jamais 2 sans 3',
+		desc:'Propose un plan à 3 tant que t\'y es, plus on est de fous plus on rit!',
+		category:'Hot',
+		collective:false,
+		reward:0
+		},
+			{
+		name:'Disons que l\'on se connait très bien maintenant...',
+		desc:'Réaliser tous les défis de la catégorie Hot',
+		category:'Hot',
+		collective:true,
+		reward:40
 		}
 	];
 	
@@ -249,6 +482,7 @@ module.exports.bootstrap = function(cb) {
 		name: 'Neveux',
 		firstName: 'Donovan',
 		team: 'ToyStory',
+		isCaptain: true,
 		thumbnail: 'https://ionicframework.com/dist/preview-app/www/assets/img/avatar-ts-woody.png'
 	};
 	
@@ -390,35 +624,35 @@ module.exports.bootstrap = function(cb) {
 	}
 	
 	function initializeTeams() {
-		initializePlayer(antoine);
+		// initializePlayer(antoine);
 		initializePlayer(donovan);
 		
-		initializePlayer(victor);
+		// initializePlayer(victor);
 		initializePlayer(adam);
 		
-		initializePlayer(robin);
+		// initializePlayer(robin);
 		initializePlayer(marion);
 		
-		initializePlayer(hugues);
-		initializePlayer(amaury);
+		// initializePlayer(hugues);
+		// initializePlayer(amaury);
 		
-		initializePlayer(thomas);
-		initializePlayer(anne);
+		// initializePlayer(thomas);
+		// initializePlayer(anne);
 		
-		initializePlayer(leo);
-		initializePlayer(sophy);
+		// initializePlayer(leo);
+		// initializePlayer(sophy);
 		
-		initializePlayer(antoineB);
-		initializePlayer(joceran);
+		// initializePlayer(antoineB);
+		// initializePlayer(joceran);
 		
-		initializePlayer(maxime);
-		initializePlayer(aurelien);
+		// initializePlayer(maxime);
+		// initializePlayer(aurelien);
 		
-		initializePlayer(etienne);
-		initializePlayer(milad);
+		// initializePlayer(etienne);
+		// initializePlayer(milad);
 		
-		initializePlayer(camille);
-		initializePlayer(alexis);
+		// initializePlayer(camille);
+		// initializePlayer(alexis);
 	}
 	Team.create(teams).exec(function(err,teams){
 		if(err) sails.log.error(err);

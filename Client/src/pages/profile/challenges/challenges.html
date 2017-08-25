@@ -22,9 +22,9 @@
 
         <ion-item *ngFor="let challenge of mapChallenges(key)" (click)="openChall(challenge)">
             <ion-label>
-               {{challenge.name}}
+               <ion-icon *ngIf="challenge.collective" name="medal"></ion-icon> {{challenge.name}}
             </ion-label>
-            <ion-icon item-end [name]="statutIcon(challenge)" [ngClass]="statutColor(challenge)"></ion-icon>
+            <ion-icon *ngIf="pendingOrAccepted(challenge)" item-end [name]="statutIcon(challenge)" [ngClass]="statutColor(challenge)"></ion-icon>
         </ion-item>
     </div>
     

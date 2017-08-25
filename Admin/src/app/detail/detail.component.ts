@@ -57,4 +57,12 @@ export class DetailComponent implements OnInit {
             ); 
         }
     }
+    
+    back(): void {
+        this.router.navigate(['/']);
+    }
+    
+    playerLeftComment(): boolean {
+        return this.claimExamined.claimerComment != "";
+    }
 }

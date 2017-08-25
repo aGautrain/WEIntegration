@@ -1,32 +1,31 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
+import { AccountHandlerService } from '../../../api/account.service';
+import { StoryRecordInterface } from '../../../api/interfaces.service';
 
 @Component({
   templateUrl: 'journal.html'
 })
-export class JournalPage {
+export class JournalPage implements OnInit {
     
-    today : Array<any>;
+    today : Array<StoryRecordInterface> = [];
     
-    lastWeek: Array<any>;
+    lastWeek: Array<StoryRecordInterface> = [];
     
-    sinceStart: Array<any>;
+    sinceStart: Array<StoryRecordInterface> = [];
     
-    constructor(){
+    constructor(private accountApi: AccountHandlerService){ }
     
-        this.sinceStart = [
-            {date:'09/07 15:12', desc:'Demande effectuée pour le challenge Epine?!'},
-            {date:'05/07 14:40', desc:'Demande effectuée pour le challenge Pyramide'}
-        ];
-        
-        this.lastWeek = [
-            {date:'Lundi 9:35', desc:'Nouveau challenge débloqué'},
-            {date:'Samedi 19:08', desc:'Challenge Pyramide validé pour votre équipe'}
-        ];
-        
-        this.today = [
-            {date:'13:49', desc:'Challenge Epine?! validé'},
-            {date:'11:27', desc:'Demande effectuée pour le challenge Isati\'butt'}
-        ];
+    ngOnInit(): void {
+        this.accountApi.myStory().then(
+            res => {
+                console.log('Fetched story records ', res);
+                this.today = res;
+            },
+            err => {
+                console.log('Error while fetching story records ', err);
+                this.today = [];
+            }
+        );
     }
     
 }

@@ -12,22 +12,22 @@ import { TeamInterface } from '../../api/interfaces.service';
 })
 export class TeamsPage {
 
-    teams: Array<TeamInterface>;
+    teams: Array<TeamInterface> = [];
     
   constructor(private teamManager: TeamManagerService,
                public navCtrl: NavController,
-               public modalCtrl: ModalController) {
-      
-      // Optimisation: le moins de requête possible
-        if(this.teamManager.getTeams().toString() == ''){
-            this.teamManager.load().subscribe( reached => {
-                this.teams = this.teamManager.getTeams();
-            });
-        } else {
-            this.teams = this.teamManager.getTeams();
-        }
-      
-  }
+               public modalCtrl: ModalController) { }
+    
+    ionViewWillEnter(): void {
+        this.teamManager.fetchTeamsAndPlayers().then(
+            res => {
+                this.teams = res.teams;
+            },
+            err => {
+                this.teams = [];
+            }
+        );
+    }
     
     openTeamDetails(team){
         let modal = this.modalCtrl.create(TeamDetailsModal, team);

@@ -13,11 +13,14 @@ export class OverviewPage {
     player: PlayerDetailsInterface;
     
     constructor(private accountHandler: AccountHandlerService) {
+        
+    }
+    
+    ionViewWillEnter(): void {
         this.accountHandler.me().then(
             res => {
                 console.log(res);
                 this.player = res;
-                this.player.points = 35;
             },
             err => {
                 console.error('error fetching current player');

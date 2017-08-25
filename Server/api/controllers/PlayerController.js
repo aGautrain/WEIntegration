@@ -64,7 +64,14 @@ module.exports = {
 			
 			if(!player) return res.badRequest('The cookie sent may have expired.');
 			
-			return res.json(player);
+			var playerCompleted = player;
+			var points = 0;
+			for(var i = 0; i < player.challengesDone.length; i++){
+				points += player.challengesDone[i].reward;
+			}
+			playerCompleted.points = points;
+			
+			return res.json(playerCompleted);
 		});
 		
 	},

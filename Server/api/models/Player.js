@@ -76,6 +76,36 @@ module.exports = {
 				});
 			});
 			
+		},
+		
+		// Returning an array of Player id (captains)
+		getCaptains: function(player, cb){
+			
+			if(!player) {
+				err = new Error();
+				err.message = 'FATAL ERROR : api/models/Player.js getCaptains()';
+				err.status = 404;
+				return cb(err);
+			}
+			
+			Player.findOne(player).exec(function(err, playerFound){
+				if(err) return cb(err);
+				if(!playerFound) return cb(new Error('Tu n\'es plus connecté'));
+				
+				Team.findOne(playerFound.team).populate('members').exec(function(err, teamFound){
+					if(err) return cb(err);
+					if(!teamFound) return cb(new Error('Impossible de trouver ton équipe ?!'));
+					
+					var captains = [];
+					for(var i = 0; i < teamFound.members.length; i++){
+						if(teamFound.members[i]['isCaptain']){
+							captains.push(teamFound.members[i]['id']);
+						}
+					}
+					
+					return cb(null, captains);
+				});
+			});
 		}
 };
 

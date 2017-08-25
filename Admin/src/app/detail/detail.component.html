@@ -15,7 +15,7 @@
         <p>{{ claimExamined?.challenge?.reward}} points</p>
     </div>
     
-    <div class="form-group">
+    <div *ngIf="playerLeftComment()" class="form-group">
       <label class="control-label">Commentaire du joueur :</label>
         <p>{{ claimExamined?.claimerComment }}</p>
     </div>
@@ -26,6 +26,7 @@
             <li><i class="fa fa-user"></i> {{ claimExamined?.claimer?.firstName }} {{ claimExamined?.claimer?.name }} </li>
             <li *ngIf="claimExamined.createdAt"><i class="fa fa-calendar"></i> {{ claimExamined?.createdAt | date: 'HH:mm:ss, le dd/MM' }} </li>
             <li><i class="fa fa-key"></i> {{ claimExamined?.id }} </li>
+            <li *ngIf="claimExamined?.challenge?.collective"><i class="fa fa-users"></i> Collective </li>
         </ul>
     </div>
     
@@ -37,6 +38,7 @@
     </div>
 
     <div class="text-right">
+        <a (click)="back()" class="btn btn-default">Annuler</a>
         <a (click)="deny()" class="btn btn-danger">Refuser</a>
         <a (click)="validate()" class="btn btn-success">Valider</a>
     </div>

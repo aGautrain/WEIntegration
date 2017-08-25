@@ -141,6 +141,10 @@ export class ChallengesPage {
         
         return color;
     }
+
+    pendingOrAccepted(challenge: ChallengeInterface): boolean {
+        return !(challenge.status === ChallengeState.available);
+    }
     
     
 }

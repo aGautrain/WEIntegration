@@ -10,30 +10,22 @@ import { TeamInterface } from '../../api/interfaces.service';
 })
 export class RankingPage {
 
-    people: Array<any>;
-    teams: Array<TeamInterface>;
+    people: Array<any> = [];
+    teams: Array<TeamInterface> = [];
     category: string = 'people';
     
-    constructor(public navCtrl: NavController, private teamManager: TeamManagerService) {
-        
-        if(this.teamManager.getTeams().toString() == ''){
-            this.teamManager.load().subscribe( reached => {
-                this.teams = this.teamManager.getTeams();
-            });
-        } else {
-            this.teams = this.teamManager.getTeams();
-        }
-        
-        if(this.teamManager.getPlayers().toString() == ''){
-            this.teamManager.load().subscribe( reached => {
-                this.people = this.teamManager.getPlayers();
-            });
-        } else {
-            this.people = this.teamManager.getPlayers();
-        }
-        
-     
+    constructor(public navCtrl: NavController, private teamManager: TeamManagerService) {     
       
+    }
+    
+    ionViewWillEnter(): void {
+        this.teamManager.fetchTeamsAndPlayers().then(
+            res => {
+                this.people = res.players;
+                this.teams = res.teams;
+            },
+            err => { }
+        );
     }
 
 }

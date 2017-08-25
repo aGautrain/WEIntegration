@@ -8,6 +8,7 @@
 module.exports = {
 	
 	claim: function(req,res){
+		// CHECK PARAMS
 		if(_.isUndefined(req.query.id)){
 			return res.forbidden('Tu n\'es plus connecté');
 		}
@@ -16,22 +17,131 @@ module.exports = {
 			return res.forbidden('Ce challenge n\'existe pas !');
 		}
 		
+		var comment = "";
+		if(!(_.isUndefined(req.query.comment))){
+			comment = req.query.comment;
+		}
+		// END CHECK PARAMS
 		sails.log.debug('Player #' + req.query.id + ' is claiming challenge "' + req.query.challenge + '"');
 		
-		Claim.claimChallenge({
-			player: req.query.id,
-			challenge: req.query.challenge
-		}, function(err, result){
-			if(err) {
-				sails.log.error(err);
-				var msg = err.message || 'Quelque chose ne fonctionne pas..';
-				return res.forbidden(msg);
-			}
+		// CHECK CAPTAIN STATUS
+		Player
+		.findOne(req.query.id)
+		.exec(function(err, playerFound){
+			if(err) return res.forbidden('Quelque chose ne fonctionne pas..');
+			if(!playerFound) return res.forbidden('Tu n\'es plus connecté');
 			
-			if(!result) return res.serverError();
+			var isCaptain = playerFound.isCaptain;
 			
-			return res.json(result);
+			// CLAIM CHALLENGE
+			Claim.claimChallenge({
+				player: req.query.id,
+				challenge: req.query.challenge,
+				captain: isCaptain,
+				comment: comment
+			}, function(err, result){
+				if(err) {
+					sails.log.error(err);
+					var msg = err.message || 'Quelque chose ne fonctionne pas..';
+					return res.forbidden(msg);
+				}
+				
+				if(!result) return res.serverError();
+				
+				return res.json(result);
+			});// END CLAIM CHALLENGE
+			
+		}); // END CHECK CAPTAIN STATUS
+		
+		
+	},
+	
+	story: function(req,res){
+		if(_.isUndefined(req.query.id)){
+			return res.forbidden('Tu n\'es plus connecté');
+		}
+		
+		sails.log.debug('Player #' + req.query.id + ' wants his story');
+		
+		Player.getCaptains(req.query.id, function(err, captains){
+			if(err) return res.serverError();
+			if(!captains) return res.json({});
+			
+			// SEARCH CLAIMS
+			Claim
+			.find({or: [
+				{ 
+					claimer: req.query.id 
+				},
+				{
+					claimer: captains
+				}
+			]})
+			.populate('challenge')
+			.exec(function (err, claims){
+				if(err) return res.serverError();
+				if(!claims) return res.json({});
+				
+				var records = [];
+				var description = "";
+				for(var i =0; i < claims.length; i++){
+					
+					
+					if(claims[i]['claimer'] != req.query.id){
+						// TEAM CHALLENGE
+						
+						if(claims[i]['challenge']['collective']){
+							description = 'Votre capitaine a réclamé "' + claims[i]['challenge']['name'] + '".'; 
+							records.push({
+								date: claims[i]['createdAt'],
+								desc: description 
+							});
+							
+							if(claims[i]['resolved']){
+								if(claims[i]['resolution'] === 'accepted'){
+									description = 'Challenge "' + claims[i]['challenge']['name'] + '" d\'équipe validé !'; 
+								} else if (claims[i]['resolution'] === 'refused'){
+									description = 'Challenge "' + claims[i]['challenge']['name'] + '" d\'équipe refusé.'; 
+								}
+							
+								records.push({
+									date: claims[i]['updatedAt'],
+									desc: description 
+								});
+							}
+						}
+						
+						// END TEAM CHALLENGE
+					} else {
+						// INDIVIDUAL CHALLENGE
+					
+						description = 'Challenge "' + claims[i]['challenge']['name'] + '" réclamé.'; 
+						records.push({
+							date: claims[i]['createdAt'],
+							desc: description 
+						});
+						
+						if(claims[i]['resolved']){
+							if(claims[i]['resolution'] === 'accepted'){
+								description = 'Challenge "' + claims[i]['challenge']['name'] + '" validé !'; 
+							} else if (claims[i]['resolution'] === 'refused'){
+								description = 'Challenge "' + claims[i]['challenge']['name'] + '" refusé.'; 
+							}
+							
+							records.push({
+								date: claims[i]['updatedAt'],
+								desc: description 
+							});
+						}
+					} // END INDIVIDUAL CHALLENGE
+				}
+				
+				return res.json(records);
+			});
+			// END SEARCH CLAIMS
 		});
+		
+		
 	},
 	
 	// ADMIN ONLY

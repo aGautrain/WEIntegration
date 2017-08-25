@@ -13,13 +13,26 @@ export class TeamManagerService {
     teams: Array<TeamInterface> = [];
     players: Array<PlayerInterface> = [];
     
-    constructor(private http: Http){
-        
-        this.load().subscribe(
-            
+    constructor(private http: Http){ }
+    
+    getTeams() {
+        return this.teams;
+    }
+    
+    getPlayers() {
+        return this.players;
+    }
+    
+    fetchTeamsAndPlayers(): Promise<{teams: TeamInterface[], players: PlayerInterface[]}> {
+        console.log('Fetching teams and players');
+        return this.loadTeams().then(
             teams => {
+                
+                this.teams = [];
+                this.players = [];
+                
                 // sorting desc teams
-                this.teams = (teams.json()).sort(function(a,b){
+                this.teams = teams.sort(function(a,b){
                     return b.points - a.points;
                 });
 
@@ -35,29 +48,27 @@ export class TeamManagerService {
                 this.players.sort(function(a,b){
                     return b.points - a.points;
                 });
+                
+                return {
+                    teams: this.teams,
+                    players: this.players
+                };
             },
             err => {
-                console.log(err);
+                console.log('error while fetching teams ', err);
             }
         );
-        
     }
     
-    getTeams() {
-        return this.teams;
+    loadTeams(): Promise<TeamInterface[]> {        
+        return this.http.get(server + 'team/getTeams')
+            .map(response => response.json())
+            .toPromise();
     }
     
-    getPlayers() {
-        return this.players;
-    }
-    
-    load() {        
-        return this.http.get(server + 'team/getTeams');
-    }
-    
-    claim(challengeId: string, playerId: number): Promise<any> {
+    claim(challengeId: string, playerId: number, comment: string): Promise<any> {
         // TODO : Remove the id= part once the app will be hosted online and not on localhost (cookie problem)
-        return this.http.get(server + 'claim/claim?id=' + playerId + '&challenge=' + challengeId)
+        return this.http.get(server + 'claim/claim?id=' + playerId + '&challenge=' + challengeId + '&comment=' + comment)
             .map(response => response.json())
             .toPromise();
     }

@@ -10,6 +10,7 @@ import { AccountHandlerService } from '../../../api/account.service';
 export class ChallModal {
 
     challenge: ChallengeInterface;
+    submited: boolean = false;
 
     constructor(public platform: Platform,
                 public params: NavParams,
@@ -17,10 +18,17 @@ export class ChallModal {
                 public alertCtrl: AlertController,
                 private manager: TeamManagerService,
                 private account: AccountHandlerService) {
-      
+        
         this.challenge = this.params.get('chall');
         
         console.log(this.challenge);
+        
+    }
+    
+    ionViewWillEnter(): void {
+        
+        
+        this.submited = false;
     }
     
     statutIcon() : string {
@@ -79,17 +87,47 @@ export class ChallModal {
     }
     
     isAvailable(): boolean {
-        return this.challenge.status === ChallengeState.available;
+        return this.challenge.status === ChallengeState.available && !this.submited;
     }
     
     claim(): void {
-        
-        
-        
-        
-        
+          
         if(this.isAvailable()){
-            this.manager.claim(this.challenge.name, this.account.getId()).then(
+            this.submited = true;
+            
+            var prompt = this.alertCtrl.create({
+                title: 'Commentaire',
+                message: 'Laisse nous un commentaire si tu le souhaites !',
+                inputs: [
+                    {
+                        name: 'comment',
+                        placeholder: ''
+                    }
+                ],
+                buttons: [
+                    {
+                        text: 'Pas besoin',
+                        role: 'cancel',
+                        handler: data => {
+                            this.finalize("");
+                        }
+                    },
+                    {
+                        text: 'Envoyer',
+                        handler: data => {
+                            this.finalize(data.comment);
+                        }
+                    }
+                ]
+            });
+            
+            prompt.present();
+            
+        }
+    }
+    
+    finalize(comment: string): void {
+        this.manager.claim(this.challenge.name, this.account.getId(), comment).then(
                 res => { 
                     let success = this.alertCtrl.create({
                         title: 'Succès',
@@ -97,7 +135,9 @@ export class ChallModal {
                         buttons: ['OK']
                     });
                     success.present();
+                    
                     this.dismiss(); 
+                    this.submited = false;
                 },
                 err => {
                     let failure = this.alertCtrl.create({
@@ -106,10 +146,11 @@ export class ChallModal {
                         buttons: ['Compris']
                     });
                     console.log('ERR', err);
+                    
                     failure.present();
+                    this.submited = false;
                 }
-            );
-        }
+        );
     }
 
   dismiss() {

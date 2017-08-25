@@ -70,3 +70,8 @@ export enum ChallengeState {
     obtained,
     available
 }
+
+export interface StoryRecordInterface {
+    date: Date;
+    desc: string;
+}

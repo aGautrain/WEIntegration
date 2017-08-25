@@ -42,7 +42,7 @@ module.exports = {
 
   },
   
-  // opts must contain challenge, player, comment (facultative for now)
+  // opts must contain challenge, player, captain, comment, (facultative for now)
   claimChallenge: function(opts,cb){
 	  
 		if(!opts) {
@@ -52,11 +52,14 @@ module.exports = {
 				return cb(err);
 		}
 		
-		var inputChall = opts.challenge;
-		var inputPlayer = opts.player;
+		var inputChall = opts.challenge; // challenge id (name)
+		var inputPlayer = opts.player; // player id
+		var inputCaptain = opts.captain; // player is captain (boolean)
+		var inputComment = opts.comment || "";
 		
 		sails.log.debug('Static method claimChallenge invoked with : #' + inputPlayer + ' and "' + inputChall + '"');
 		
+		// CHECK IF ALREADY CLAIMING
 		Claim
 		.findOne()
 		.where({
@@ -68,41 +71,56 @@ module.exports = {
 			if(err) return cb(err);
 			if(claim) return cb(new Error('Challenge déjà réclamé !'));
 			
-			// If can claim (not treating the collective challenges yet) :
-			Claim.create({
-				claimer: inputPlayer,
-				challenge: inputChall,
-				resolved: false,
-				resolution: "waiting",
-				claimerComment: "Not implemented",
-				solverComment: "",
-				claimerProof: "Not implemented"
-			}).exec(function (err, created){
+			// CHECK IF COLLECTIVE
+			Challenge
+			.findOne(inputChall)
+			.exec(function(err, chall){
 				if(err) return cb(err);
+				if(!chall) return cb(new Error('Challenge inexistant.'));
 				
-				// We transfer the challenge to his place
-				Player.findOne({
-					id: inputPlayer
-				})
-				.exec(function (err, player){
+				if(chall.collective && !inputCaptain){
+					return cb(new Error('Seul le capitaine de l\'équipe peut réclamer ce challenge !'));
+				}
+				
+				// CREATE CLAIM
+				Claim.create({
+					claimer: inputPlayer,
+					challenge: inputChall,
+					resolved: false,
+					resolution: "waiting",
+					claimerComment: inputComment,
+					solverComment: "",
+					claimerProof: "Not implemented"
+				}).exec(function (err, created){
 					if(err) return cb(err);
-					if(!player) return cb(new Error('Joueur introuvable.'));
 					
-					// transfer here
-					player.challengesTodo.remove(inputChall);
-					player.challengesDoing.add(inputChall);
-					
-					player.save(function(err){
+					// TRANSFER CHALLENGE FROM "TO DO" TO "DOING"
+					Player.findOne({
+						id: inputPlayer
+					})
+					.exec(function (err, player){
 						if(err) return cb(err);
+						if(!player) return cb(new Error('Joueur introuvable.'));
 						
-						sails.log.info('New challenge claimed');
-						return cb(null,created);
-					});
+						// transfer here
+						player.challengesTodo.remove(inputChall);
+						player.challengesDoing.add(inputChall);
+						
+						player.save(function(err){
+							if(err) return cb(err);
+							
+							sails.log.info('New challenge claimed');
+							return cb(null,created);
+						});
 					
-				});	
+					});	// END TRANSFER CHALLENGE FROM "TO DO" TO "DOING"
 				
-			});
-		});
+				}); // END CREATE CLAIM
+				
+				
+			}); // END CHECK IF COLLECTIVE
+			
+		}); // END CHECK IF ALREADY CLAIMING
   },
   
   acceptClaim: function(opts, cb){
