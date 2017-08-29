@@ -62,14 +62,37 @@ module.exports = {
 			
 			if(err) return res.serverError();
 			
-			if(!player) return res.badRequest('The cookie sent may have expired.');
+			if(!player) return res.badRequest('The session cookie sent may have expired. Please reconnect !');
 			
 			var playerCompleted = player;
+			// Calculating the amount of points player has
 			var points = 0;
 			for(var i = 0; i < player.challengesDone.length; i++){
 				points += player.challengesDone[i].reward;
 			}
 			playerCompleted.points = points;
+			
+			// No need removing repeatable challenges done (front will do it)			
+			
+			// Adding a virtual attribute to challenges to do
+			var currentChall;
+			for(var j = 0; j < player.challengesTodo.length; j++){
+				currentChall = player.challengesTodo[j];
+				if(currentChall['repeatable']){
+					if(player.challengesRepeated[currentChall['name']] != undefined){
+						playerCompleted.challengesTodo[j]['repeated'] = player.challengesRepeated[currentChall['name']];
+					}
+				}
+			}
+			
+			for(var k = 0; k < player.challengesDoing.length; k++){
+				currentChall = player.challengesDoing[k];
+				if(currentChall['repeatable']){
+					if(player.challengesRepeated[currentChall['name']] != undefined){
+						playerCompleted.challengesDoing[k]['repeated'] = player.challengesRepeated[currentChall['name']];
+					}
+				}
+			}
 			
 			return res.json(playerCompleted);
 		});

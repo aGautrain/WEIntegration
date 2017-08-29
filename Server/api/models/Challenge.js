@@ -26,6 +26,11 @@ module.exports = {
 		  defaultsTo: false,
 		  required: true
 	  },
+	  repeatable: {
+		  type: 'boolean',
+		  defaultsTo: false,
+		  required: true
+	  },
 	  category: {
 		  type: 'string',
 		  enum: [

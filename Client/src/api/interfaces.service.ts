@@ -56,12 +56,14 @@ export interface ChallengeInterface {
     name: string;
     desc: string;
     collective: boolean;
+    repeatable: boolean;
     category: string;
     thumbnail?: string;
     reward: number;
     createdAt?: Date;
     updatedAt?: Date;
     
+    repeated?: number;
     status?: ChallengeState;
 }
 

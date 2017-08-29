@@ -60,6 +60,7 @@ module.exports = {
 		sails.log.debug('Static method claimChallenge invoked with : #' + inputPlayer + ' and "' + inputChall + '"');
 		
 		// CHECK IF ALREADY CLAIMING
+		
 		Claim
 		.findOne()
 		.where({
@@ -81,6 +82,39 @@ module.exports = {
 				if(chall.collective && !inputCaptain){
 					return cb(new Error('Seul le capitaine de l\'équipe peut réclamer ce challenge !'));
 				}
+				
+				// CHECK UNICITY OF COLLECTIVE CHALLENGE
+				/*if(chall.collective && inputCaptain){
+					Player.getCaptains(inputPlayer, function(err, captains){
+						if(err) return cb(err);
+						if(!captains) return cb(new Error('Il n\'y a pas de capitaine dans cette équipe.'));
+						
+						var otherCaptains = captains;
+						otherCaptains.splice(captains.indexOf(inputPlayer), 1);
+						Claim
+						.find({
+							or: [
+								{
+									challenge: inputChall,
+									claimer: otherCaptains,
+									resolved: false
+								},
+								{
+									challenge: inputChall,
+									claimer: otherCaptains,
+									resolved: true,
+									resolution: 'accepted'
+								}
+							]							
+						})
+						.exec(function (err, cantClaim){
+							if(err) return cb(err);
+							if(cantClaim) return cb(new Error('Ce challenge collectif est déjà demandé ou obtenu par votre équipe.'));
+						});
+					});
+				}*/
+				// END CHECK UNICITY OF COLLECTIVE CHALLENGE
+				
 				
 				// CREATE CLAIM
 				Claim.create({
@@ -137,14 +171,16 @@ module.exports = {
 		sails.log.debug('Static method acceptClaim invoked with : player#' + inputPlayer + ' and claim#' + inputClaim);
 		
 		Claim
-		.findOne()
-		.where({
+		.findOne({
 			id: inputClaim,
 			resolved: false
 		})
+		.populate('challenge')
 		.exec(function(err, claim){
 			if(err) return cb(err);
 			if(!claim) return cb(new Error('Demande inexistante ou bien déjà traitée !'));
+			
+			var challengeConcerned = claim.challenge;
 			
 			var updatedClaim = claim;
 			updatedClaim.resolved = true;
@@ -166,15 +202,55 @@ module.exports = {
 					if(err) return cb(err);
 					if(!player) return cb(new Error('Joueur introuvable.'));
 					
-					player.challengesDoing.remove(claim.challenge);
-					player.challengesDone.add(claim.challenge);
-					player.save(function(err){
-						if(err) return cb(err);
+					player.challengesDoing.remove(challengeConcerned['name']);
+					player.challengesDone.add(challengeConcerned['name']);
+					// CHECK IF REPEATABLE 
+					if(challengeConcerned['repeatable']){
 						
-						sails.log.info('Claim successfuly accepted');
-						return cb(null,updated);
+						// IF REPEATABLE WE SAVE PLAYER + INCREMENT COUNTER
 						
-					});
+						player.challengesTodo.add(challengeConcerned['name']);
+						
+						
+						player.save(function(err){
+							if(err) return cb(err);
+							
+							var counter = player.challengesRepeated[challengeConcerned['name']];
+							if(counter == undefined){
+								// never done before
+								counter = 1;
+							} else {
+								// already done yet
+								counter++;
+							}
+							
+							player.challengesRepeated[challengeConcerned['name']] = counter;
+							var challCounters = player.challengesRepeated;
+							
+							Player
+							.update(player.id, {challengesRepeated: challCounters})
+							.exec(function(err, updatedPlayer){
+								if(err) return cb(err);
+								if(!updatedPlayer) return cb(new Error('Joueur introuvable'));
+								
+								sails.log.info('Claim successfuly accepted and counter increased');
+								return cb(null, updated);
+							});
+							
+							
+						});
+						
+					} else {
+						
+						// IF NOT REPEATABLE JUST ENDING
+						player.save(function(err){
+							if(err) return cb(err);
+							
+							sails.log.info('Claim successfuly accepted');
+							return cb(null,updated);
+							
+						});
+					}
 				});
 				
 			});

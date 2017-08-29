@@ -34,6 +34,7 @@ module.exports.bootstrap = function(cb) {
 			desc: 'Chaque visite de club te rapportera les points !',
 			category: 'Vie de l\'école',
 			collective: false,
+			repeatable: true,
 			reward: 5
 		},
 		{
@@ -475,6 +476,7 @@ module.exports.bootstrap = function(cb) {
 		name: 'Gautrain',
 		firstName: 'Antoine',
 		team: 'ToyStory',
+		isCaptain: true,
 		thumbnail: 'https://ionicframework.com/dist/preview-app/www/assets/img/avatar-ts-buzz.png'
 	};
 	
@@ -624,7 +626,7 @@ module.exports.bootstrap = function(cb) {
 	}
 	
 	function initializeTeams() {
-		// initializePlayer(antoine);
+		initializePlayer(antoine);
 		initializePlayer(donovan);
 		
 		// initializePlayer(victor);

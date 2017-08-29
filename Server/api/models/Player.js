@@ -36,6 +36,10 @@ module.exports = {
 	  },
 	  challengesDone: {
 		  collection: 'challenge'
+	  },
+	  challengesRepeated: {
+		  type: 'json',
+		  defaultsTo: {}
 	  }
 	  // points : calculated with challengesDone
 

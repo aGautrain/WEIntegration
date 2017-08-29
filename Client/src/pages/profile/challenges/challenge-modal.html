@@ -27,6 +27,7 @@
         <ion-item text-wrap>
             <p class="description">{{challenge?.desc}}</p>
         </ion-item>
+        <ion-item *ngIf="isRepeatable()" text-wrap>Répétable - Challenge effectué {{getRepetitions()}} fois.</ion-item>
         <ion-item>
             <h3 [ngClass]="{reward: true, achieved: isObtained()}">{{challenge?.reward}}</h3>
         </ion-item>

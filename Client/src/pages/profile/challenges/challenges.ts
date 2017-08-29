@@ -68,8 +68,11 @@ export class ChallengesPage {
         
         for(let i: number = 0; i < me.challengesDone.length; i++){
             let chall: ChallengeInterface = me.challengesDone[i];
-            chall.status = ChallengeState.obtained;
-            challs.push(chall);
+            
+            if(!chall.repeatable){
+                chall.status = ChallengeState.obtained;
+                challs.push(chall);
+            }
         }
         
         return challs;
@@ -144,6 +147,10 @@ export class ChallengesPage {
 
     pendingOrAccepted(challenge: ChallengeInterface): boolean {
         return !(challenge.status === ChallengeState.available);
+    }
+
+    getRepetitions(challenge: ChallengeInterface) {
+        return challenge.repeated || 0;
     }
     
     

@@ -90,6 +90,14 @@ export class ChallModal {
         return this.challenge.status === ChallengeState.available && !this.submited;
     }
     
+    isRepeatable(): boolean {
+        return this.challenge.repeatable;
+    }
+    
+    getRepetitions() {
+        return this.challenge.repeated || 0;
+    }
+    
     claim(): void {
           
         if(this.isAvailable()){

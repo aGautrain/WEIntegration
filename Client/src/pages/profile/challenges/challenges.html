@@ -23,6 +23,7 @@
         <ion-item *ngFor="let challenge of mapChallenges(key)" (click)="openChall(challenge)">
             <ion-label>
                <ion-icon *ngIf="challenge.collective" name="medal"></ion-icon> {{challenge.name}}
+               <span *ngIf="challenge.repeatable"> <b>[répétable]</b> x{{getRepetitions(challenge)}}</span>
             </ion-label>
             <ion-icon *ngIf="pendingOrAccepted(challenge)" item-end [name]="statutIcon(challenge)" [ngClass]="statutColor(challenge)"></ion-icon>
         </ion-item>
