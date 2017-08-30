@@ -22,19 +22,6 @@
 
 module.exports.routes = {
 
-  /***************************************************************************
-  *                                                                          *
-  * Make the view located at `views/homepage.ejs` (or `views/homepage.jade`, *
-  * etc. depending on your default view engine) your home page.              *
-  *                                                                          *
-  * (Alternatively, remove this and add an `index.html` file in your         *
-  * `assets` directory)                                                      *
-  *                                                                          *
-  ***************************************************************************/
-
-  '/': {
-    view: 'homepage'
-  }
 
   /***************************************************************************
   *                                                                          *
@@ -46,4 +33,19 @@ module.exports.routes = {
   *                                                                          *
   ***************************************************************************/
 
+  'post /register': 'AccountController.registerUser',
+  'post /login': 'PlayerController.login',
+  'get /me': 'PlayerController.me',
+  'get /logout': 'PlayerController.logout',
+  'get /claim': 'ClaimController.claim',
+  'get /journal': 'ClaimController.story',
+  'get /team': 'TeamController.getTeam',
+  'get /teams': 'TeamController.getTeams',
+  
+  'get /admin/accept': 'ClaimController.accept',
+  'get /admin/refuse': 'ClaimController.refuse',
+  'get /admin/list': 'ClaimController.list'
+  
+  
+  
 };

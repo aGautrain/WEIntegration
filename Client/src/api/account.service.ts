@@ -20,7 +20,7 @@ export class AccountHandlerService {
         let headers = new Headers({'Content-Type':'application/json'});
         let options = new RequestOptions({headers:headers});
         
-        return this.http.post(server + 'account/registerUser', account, options)
+        return this.http.post(server + 'register', account, options)
             .map(response => response.json())
             .toPromise();
     }
@@ -30,7 +30,7 @@ export class AccountHandlerService {
         let headers = new Headers({'Content-Type':'application/json'});
         let options = new RequestOptions({headers:headers});
         
-        return this.http.post(server + 'player/login', credentials, options)
+        return this.http.post(server + 'login', credentials, options)
             .map(response => response.json())
             .toPromise();
         
@@ -47,19 +47,19 @@ export class AccountHandlerService {
     
     me(): Promise<PlayerDetailsInterface>{
         
-        console.log('requesting /player/me');
+        console.log('requesting /me');
         
         // TODO : Remove the id= part once the app will be hosted online and not on localhost (cookie problem)
-        return this.http.get(server + 'player/me?id=' + this.id)
+        return this.http.get(server + 'me?id=' + this.id)
             .map(response => response.json())
             .toPromise();
     }
     
     myStory(): Promise<StoryRecordInterface[]>{
-        console.log('requesting /claim/story');
+        console.log('requesting /journal');
         
         // TODO : Remove the id= part once the app will be hosted online and not on localhost (cookie problem)
-        return this.http.get(server + 'claim/story?id=' + this.id)
+        return this.http.get(server + 'journal?id=' + this.id)
             .map(response => response.json())
             .toPromise();
     }

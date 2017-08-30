@@ -74,10 +74,12 @@ module.exports = {
 					playerCreated.save(function(err){
                         if(err) return cb(err);
 						sails.log.info('Done initializing the player ' + playerCreated.firstName);
-						return cb(null,playerCreated);
+						
                         
                     });
 				});
+				
+				return cb(null,playerCreated);
 			});
 			
 		},

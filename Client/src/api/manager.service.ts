@@ -61,14 +61,14 @@ export class TeamManagerService {
     }
     
     loadTeams(): Promise<TeamInterface[]> {        
-        return this.http.get(server + 'team/getTeams')
+        return this.http.get(server + 'teams')
             .map(response => response.json())
             .toPromise();
     }
     
     claim(challengeId: string, playerId: number, comment: string): Promise<any> {
         // TODO : Remove the id= part once the app will be hosted online and not on localhost (cookie problem)
-        return this.http.get(server + 'claim/claim?id=' + playerId + '&challenge=' + challengeId + '&comment=' + comment)
+        return this.http.get(server + 'claim?id=' + playerId + '&challenge=' + challengeId + '&comment=' + comment)
             .map(response => response.json())
             .toPromise();
     }

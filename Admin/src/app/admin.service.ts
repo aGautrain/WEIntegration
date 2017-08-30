@@ -15,25 +15,25 @@ export class AdminService {
   constructor(private http: Http) { }
     
     list(): Promise<Claim[]> {
-        console.log('requesting /claim/list');
+        console.log('requesting /admin/list');
         
-        return this.http.get(server + 'claim/list')
+        return this.http.get(server + 'admin/list')
             .map(response => response.json())
             .toPromise();
     }
     
     accept(): Promise<any> {
-        console.log('requesting /claim/accept');
+        console.log('requesting /admin/accept');
         
-        return this.http.get(server + 'claim/accept?id=' + this.claimEdited.claimer.id + '&claim=' + this.claimEdited.id)
+        return this.http.get(server + 'admin/accept?id=' + this.claimEdited.claimer.id + '&claim=' + this.claimEdited.id)
             .map(response => response.json())
             .toPromise();
     }
     
     refuse(): Promise<any> {
-        console.log('requesting /claim/refuse');
+        console.log('requesting /admin/refuse');
         
-        return this.http.get(server + 'claim/refuse?id=' + this.claimEdited.claimer.id + '&claim=' + this.claimEdited.id)
+        return this.http.get(server + 'admin/refuse?id=' + this.claimEdited.claimer.id + '&claim=' + this.claimEdited.id)
             .map(response => response.json())
             .toPromise();
     }

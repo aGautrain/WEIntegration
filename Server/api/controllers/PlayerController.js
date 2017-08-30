@@ -67,15 +67,21 @@ module.exports = {
 			var playerCompleted = player;
 			// Calculating the amount of points player has
 			var points = 0;
+			var currentChall;
 			for(var i = 0; i < player.challengesDone.length; i++){
-				points += player.challengesDone[i].reward;
+				currentChall = player.challengesDone[i];
+				if(currentChall.repeatable){
+					points += (currentChall.reward * player.challengesRepeated[currentChall.name]);
+				} else {
+					points += currentChall.reward;
+				}
 			}
 			playerCompleted.points = points;
 			
 			// No need removing repeatable challenges done (front will do it)			
 			
 			// Adding a virtual attribute to challenges to do
-			var currentChall;
+			
 			for(var j = 0; j < player.challengesTodo.length; j++){
 				currentChall = player.challengesTodo[j];
 				if(currentChall['repeatable']){

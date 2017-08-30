@@ -63,12 +63,19 @@ module.exports = {
 				
 				var teamScore = 0;
 				var teamMembersRepresentation = [];
+				var currentChall;
 				
 				for(var i = 0; i < members.length; i++){
 					members[i].score = 0;
 					for(var j = 0; j < members[i].challengesDone.length; j++){
-						teamScore += members[i].challengesDone[j].reward;
-						members[i].score += members[i].challengesDone[j].reward;
+						currentChall = members[i].challengesDone[j];
+						if(members[i].challengesDone[j]['repeatable']){
+							teamScore += currentChall.reward * members[i].challengesRepeated[currentChall.name];
+							members[i].score += currentChall.reward * members[i].challengesRepeated[currentChall.name];
+						} else {
+							teamScore += currentChall.reward;
+							members[i].score += currentChall.reward;
+						}
 					}
 					// On choisit quoi montrer à la Vue
 					teamMembersRepresentation.push({
@@ -121,8 +128,16 @@ module.exports = {
 				for(var b = 0; b < players.length; b++){
 					
 					players[b].score = 0;
+					var currentChall;
 					for(var c = 0; c < players[b].challengesDone.length; c++){
-						players[b].score += players[b].challengesDone[c].reward;
+						currentChall = players[b].challengesDone[c];
+						
+						if(currentChall['repeatable']){
+							players[b].score += (currentChall.reward * players[b].challengesRepeated[currentChall.name]);
+						} else {
+							players[b].score += currentChall.reward;
+						}
+						
 					}
 					
 					// var randomScore = Math.round(Math.random()*10);
