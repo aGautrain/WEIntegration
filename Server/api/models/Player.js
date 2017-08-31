@@ -61,7 +61,9 @@ module.exports = {
 				
 				// For each initialization we go looking for all challenges (cost a lot for 10+ players)
 				Challenge.find({}).exec(function(err,challenges){
-					if(err) return cb(err);
+					if(err) {
+						sails.log.debug(err);
+					}
 					// On a bien les challenges sous la forme d'un tableau
 					// On retient uniquement les id
 					var chall_ids = [];
@@ -72,7 +74,9 @@ module.exports = {
 					// On les ajoute au joueur initialisé
 					playerCreated.challengesTodo.add(chall_ids);
 					playerCreated.save(function(err){
-                        if(err) return cb(err);
+                        if(err) { 
+							sails.log.debug(err);
+						}
 						sails.log.info('Done initializing the player ' + playerCreated.firstName);
 						
                         

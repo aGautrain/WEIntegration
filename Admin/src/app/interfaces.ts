@@ -32,3 +32,12 @@ export interface Player {
     updatedAt: Date;
     id: number;
 }
+
+export interface Team {
+    members: Array<any>;
+    name: string;
+    thumbnail: string;
+    advantage: number;
+    createdAt?: Date;
+    updatedAt?: Date;
+}

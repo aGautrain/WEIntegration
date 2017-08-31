@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { Http, Headers, RequestOptions } from '@angular/http';
 import 'rxjs/add/operator/toPromise';
 import 'rxjs/add/operator/map';
-import { Claim, Player, Challenge } from './interfaces';
+import { Claim, Player, Challenge, Team } from './interfaces';
 
 const server: string = 'http://192.168.0.12:1337/';
 
@@ -34,6 +34,23 @@ export class AdminService {
         console.log('requesting /admin/refuse');
         
         return this.http.get(server + 'admin/refuse?id=' + this.claimEdited.claimer.id + '&claim=' + this.claimEdited.id)
+            .map(response => response.json())
+            .toPromise();
+    }
+    
+    teams(): Promise<Team[]> {
+        console.log('requesting /admin/teams');
+        return this.http.get(server + 'admin/teams')
+            .map(response => response.json())
+            .toPromise();
+    }
+    
+    advantage(content): Promise<any> {
+        console.log('posting /admin/advantage');
+        let headers = new Headers({'Content-Type':'application/json'});
+        let options = new RequestOptions({headers:headers});
+        
+        return this.http.post(server + 'admin/advantage', content, options)
             .map(response => response.json())
             .toPromise();
     }

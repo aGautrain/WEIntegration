@@ -44,7 +44,11 @@ module.exports.routes = {
   
   'get /admin/accept': 'ClaimController.accept',
   'get /admin/refuse': 'ClaimController.refuse',
-  'get /admin/list': 'ClaimController.list'
+  'get /admin/list': 'ClaimController.list',
+  
+  'post /admin/advantage': 'TeamController.setAdvantage',
+  
+  'get /admin/teams': 'TeamController.getAdvantages'
   
   
   

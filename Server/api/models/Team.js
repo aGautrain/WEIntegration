@@ -23,6 +23,11 @@ module.exports = {
 	  members: {
 		  collection: 'player',
 		  via: 'team'
+	  },
+	  advantage: {
+		  type: 'integer',
+		  required: true,
+		  defaultsTo: 0
 	  }
 	  // points : calculated
 	  // nbMembers : calculated
@@ -61,7 +66,7 @@ module.exports = {
 			Player.find({id: membersId}).populate('challengesDone').exec(function(err,members){
 				if(err) return cb(err);
 				
-				var teamScore = 0;
+				var teamScore = team.advantage;
 				var teamMembersRepresentation = [];
 				var currentChall;
 				
@@ -113,7 +118,7 @@ module.exports = {
 			for(var a = 0; a < teams.length; a++){
 				teamsRepresentation[teams[a].name] = {
 					name: teams[a].name,
-					points: 0,
+					points: teams[a].advantage,
 					nbMembers: teams[a].members.length,
 					thumbnail: teams[a].thumbnail,
 					members: []

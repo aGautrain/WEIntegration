@@ -136,7 +136,30 @@ module.exports = {
 					} // END INDIVIDUAL CHALLENGE
 				}
 				
-				return res.json(records);
+				// ADDING THE NOTES OF THE TEAM - team should be given as a cookie var
+				Player.findOne(req.query.id).exec(function(err,playerFound){
+					if(err) return res.serverError();
+					if(!playerFound) return res.forbidden('Tu n\'es plus connecté !');
+					
+					var teamOfPlayer = playerFound.team;
+					
+					Note.find({
+						team: teamOfPlayer
+					}).exec(function(err, notes){
+						if(err) return res.serverError();
+						
+						for(var j = 0; j < notes.length; j++){
+							records.push({
+								date: notes[j]['createdAt'],
+								desc: notes[j]['content']
+							});
+						}
+						
+						return res.json(records);
+					});
+				});
+				
+				
 			});
 			// END SEARCH CLAIMS
 		});

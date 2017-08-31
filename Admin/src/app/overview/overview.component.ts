@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { AdminService } from '../admin.service';
-import { Claim, Challenge, Player } from '../interfaces';
+import { Claim, Challenge, Player, Team } from '../interfaces';
 
 @Component({
   selector: 'app-overview',
@@ -11,16 +11,46 @@ import { Claim, Challenge, Player } from '../interfaces';
 export class OverviewComponent implements OnInit {
 
     claims: Claim[] = [];
+    teams: Team[] = [];
     
   constructor(private router: Router, private api: AdminService) { }
 
   ngOnInit() {
       this.listClaims();
+      this.listTeams();
   }
     
     verify(claim: Claim): void {
         this.api.setEdited(claim);
         this.router.navigate(['/detail']);
+    }
+    
+    advantage(team: Team): void {
+        
+        let explanation: string = prompt('Raison du nouvel avantage ?');
+        
+        if(explanation != null && explanation != undefined && explanation != ""){
+            let given: number = parseInt(prompt('Nouvel avantage de l\'équipe ' + team.name + ' ?'));
+            if(given != null && given != undefined && given > -10000 && given < 10000){
+                this.api.advantage({
+                    comment: explanation,
+                    advantage: given,
+                    team: team.name
+                }).then(
+                    res => {
+                        alert('Avantage changé !');
+                        this.listTeams();
+                    },
+                    err => {
+                        alert('Une erreur a eu lieu..');
+                    }
+                );
+            } else {
+                alert('L\'avantage doit être un nombre situé entre -9999 et 9999 !');
+            }
+        } else {
+            alert('Vous devez justifier le nouvel avantage !');
+        }
     }
     
     // function consuming the promise
@@ -32,6 +62,19 @@ export class OverviewComponent implements OnInit {
             },
             err => {
                 this.claims = [];
+                console.log('err', err);
+            }
+        );
+    }
+    
+    listTeams(): void {
+        this.api.teams().then(
+            res => {
+                this.teams = res;
+                console.log('res', res);
+            },
+            err => {
+                this.teams = [];
                 console.log('err', err);
             }
         );
