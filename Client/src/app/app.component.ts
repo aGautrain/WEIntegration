@@ -16,12 +16,20 @@ export class MyApp {
 
   constructor(platform: Platform,
               statusBar: StatusBar,
-              splashScreen: SplashScreen) {
+              public splashScreen: SplashScreen) {
     platform.ready().then(() => {
       // Okay, so the platform is ready and our plugins are available.
-      // Here you can do any higher level native things you might need.
+      // Here you can do any higher level native things you might need
       statusBar.styleDefault();
-      splashScreen.hide();
+      this.hideSplashScreen();
     });
   }
+    
+    hideSplashScreen() {
+        if(this.splashScreen){
+            setTimeout(()=> {
+                this.splashScreen.hide();
+            }, 100);
+        }
+    }
 }
