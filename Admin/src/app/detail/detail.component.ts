@@ -16,6 +16,7 @@ import {
 export class DetailComponent implements OnInit {
 
     claimExamined: Claim = null;
+    comment: string = "";
 
     constructor(private router: Router, private api: AdminService) {}
 
@@ -25,11 +26,12 @@ export class DetailComponent implements OnInit {
             this.router.navigate(['/']);
         }
         this.claimExamined = this.api.getEdited();
+        this.comment = "";
     }
 
     deny(): void {
         if (confirm('Êtes-vous sur ? Le refus ne peut être annulé !')) {
-            this.api.refuse().then(
+            this.api.refuse(this.comment).then(
                 res => {
                     console.log('Well refused');
                     this.router.navigate(['/']);
@@ -45,7 +47,7 @@ export class DetailComponent implements OnInit {
 
     validate(): void {
         if (confirm('Êtes-vous sûr ? La validation ne peut être annulée !')) {
-            this.api.accept().then(
+            this.api.accept(this.comment).then(
                 res => {
                     console.log('Well accepted');
                     this.router.navigate(['/']);

@@ -4,7 +4,7 @@ import 'rxjs/add/operator/toPromise';
 import 'rxjs/add/operator/map';
 import { Claim, Player, Challenge, Team } from './interfaces';
 
-const server: string = 'http://192.168.0.12:1337/';
+const server: string = 'http://151.80.140.30/';
 
 @Injectable()
 export class AdminService {
@@ -22,18 +22,18 @@ export class AdminService {
             .toPromise();
     }
     
-    accept(): Promise<any> {
+    accept(comment: string): Promise<any> {
         console.log('requesting /admin/accept');
         
-        return this.http.get(server + 'admin/accept?id=' + this.claimEdited.claimer.id + '&claim=' + this.claimEdited.id)
+        return this.http.get(server + 'admin/accept?id=' + this.claimEdited.claimer.id + '&claim=' + this.claimEdited.id + '&comment=' + comment)
             .map(response => response.json())
             .toPromise();
     }
     
-    refuse(): Promise<any> {
+    refuse(comment: string): Promise<any> {
         console.log('requesting /admin/refuse');
         
-        return this.http.get(server + 'admin/refuse?id=' + this.claimEdited.claimer.id + '&claim=' + this.claimEdited.id)
+        return this.http.get(server + 'admin/refuse?id=' + this.claimEdited.claimer.id + '&claim=' + this.claimEdited.id + '&comment=' + comment)
             .map(response => response.json())
             .toPromise();
     }

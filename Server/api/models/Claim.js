@@ -167,6 +167,7 @@ module.exports = {
 		
 		var inputPlayer = opts.player;
 		var inputClaim = opts.claim;
+		var inputSolverComment = opts.comment;
 		
 		sails.log.debug('Static method acceptClaim invoked with : player#' + inputPlayer + ' and claim#' + inputClaim);
 		
@@ -185,6 +186,9 @@ module.exports = {
 			var updatedClaim = claim;
 			updatedClaim.resolved = true;
 			updatedClaim.resolution = "accepted";
+			if(inputSolverComment != undefined && inputSolverComment != null){
+				updatedClaim.solverComment = inputSolverComment
+			}
 			
 			// We can now accept it (update record)
 			Claim
@@ -268,6 +272,7 @@ module.exports = {
 		
 		var inputPlayer = opts.player;
 		var inputClaim = opts.claim;
+		var inputSolverComment = opts.comment;
 		
 		sails.log.debug('Static method refuseClaim invoked with : player#' + inputPlayer + ' and claim#' + inputClaim);
 		
@@ -284,6 +289,9 @@ module.exports = {
 			var updatedClaim = claim;
 			updatedClaim.resolved = true;
 			updatedClaim.resolution = "refused";
+			if(inputSolverComment != undefined && inputSolverComment != null){
+				updatedClaim.solverComment = inputSolverComment
+			}
 			
 			// We can now accept it (update record)
 			Claim

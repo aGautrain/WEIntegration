@@ -103,6 +103,10 @@ module.exports = {
 								} else if (claims[i]['resolution'] === 'refused'){
 									description = 'Challenge "' + claims[i]['challenge']['name'] + '" d\'équipe refusé.'; 
 								}
+								
+								if(claims[i]['solverComment'] != ""){
+									description += (' Commentaire : "' + claims[i]['solverComment'] + '"');
+								}
 							
 								records.push({
 									date: claims[i]['updatedAt'],
@@ -126,6 +130,10 @@ module.exports = {
 								description = 'Challenge "' + claims[i]['challenge']['name'] + '" validé !'; 
 							} else if (claims[i]['resolution'] === 'refused'){
 								description = 'Challenge "' + claims[i]['challenge']['name'] + '" refusé.'; 
+							}
+							
+							if(claims[i]['solverComment'] != ""){
+								description += (' Commentaire : "' + claims[i]['solverComment'] + '"');
 							}
 							
 							records.push({
@@ -179,20 +187,41 @@ module.exports = {
 		
 		sails.log.debug('Accepting claim #' + req.query.claim + ' of player #' + req.query.id);
 		
-		Claim.acceptClaim({
-			player: req.query.id,
-			claim: req.query.claim
-		}, function(err, result){
-			if(err) {
-				sails.log.error(err);
-				var msg = err.message || 'Quelque chose ne fonctionne pas..';
-				return res.forbidden(msg);
-			}
+		if(!_.isUndefined(req.query.comment) && req.query.comment != ""){
 			
-			if(!result) return res.serverError();
+			Claim.acceptClaim({
+				player: req.query.id,
+				claim: req.query.claim,
+				comment: req.query.comment
+			}, function(err, result){
+				if(err) {
+					sails.log.error(err);
+					var msg = err.message || 'Quelque chose ne fonctionne pas..';
+					return res.forbidden(msg);
+				}
+				
+				if(!result) return res.serverError();
+				
+				return res.json(result);
+			});
 			
-			return res.json(result);
-		});
+		} else {
+		
+			Claim.acceptClaim({
+				player: req.query.id,
+				claim: req.query.claim
+			}, function(err, result){
+				if(err) {
+					sails.log.error(err);
+					var msg = err.message || 'Quelque chose ne fonctionne pas..';
+					return res.forbidden(msg);
+				}
+				
+				if(!result) return res.serverError();
+				
+				return res.json(result);
+			});
+		}
 	},
 	
 	// ADMIN ONLY
@@ -207,20 +236,43 @@ module.exports = {
 		
 		sails.log.debug('Refusing claim #' + req.query.claim + ' of player #' + req.query.id);
 		
-		Claim.refuseClaim({
-			player: req.query.id,
-			claim: req.query.claim
-		}, function(err, result){
-			if(err) {
-				sails.log.error(err);
-				var msg = err.message || 'Quelque chose ne fonctionne pas..';
-				return res.forbidden(msg);
-			}
+		
+		if(!_.isUndefined(req.query.comment) && req.query.comment != ""){
 			
-			if(!result) return res.serverError();
+			Claim.refuseClaim({
+				player: req.query.id,
+				claim: req.query.claim,
+				comment: req.query.comment
+			}, function(err, result){
+				if(err) {
+					sails.log.error(err);
+					var msg = err.message || 'Quelque chose ne fonctionne pas..';
+					return res.forbidden(msg);
+				}
+				
+				if(!result) return res.serverError();
+				
+				return res.json(result);
+			});
 			
-			return res.json(result);
-		});
+		} else {
+		
+			Claim.refuseClaim({
+				player: req.query.id,
+				claim: req.query.claim
+			}, function(err, result){
+				if(err) {
+					sails.log.error(err);
+					var msg = err.message || 'Quelque chose ne fonctionne pas..';
+					return res.forbidden(msg);
+				}
+				
+				if(!result) return res.serverError();
+				
+				return res.json(result);
+			});
+		}
+		
 	},
 	
 	// ADMIN ONLY
