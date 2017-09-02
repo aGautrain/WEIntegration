@@ -4,7 +4,7 @@ import { TeamInterface, PlayerInterface } from './interfaces.service';
 import 'rxjs/add/operator/toPromise';
 import 'rxjs/add/operator/map';
 
-const server: string = 'http://192.168.0.12:1337/';
+const server: string = 'http://151.80.140.30/';
 
 
 @Injectable()

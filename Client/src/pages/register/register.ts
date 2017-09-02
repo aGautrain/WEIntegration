@@ -4,7 +4,7 @@ import { AccountHandlerService } from '../../api/account.service';
 
 import { TabsPage } from '../tabs/tabs';
 
-@IonicPage()
+
 @Component({
   selector: 'page-register',
   templateUrl: 'register.html',

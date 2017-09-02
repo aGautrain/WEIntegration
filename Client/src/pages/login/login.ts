@@ -5,7 +5,6 @@ import { AccountHandlerService } from '../../api/account.service';
 import { TabsPage } from '../tabs/tabs';
 import { RegisterPage } from '../register/register';
 
-@IonicPage()
 @Component({
   selector: 'page-login',
   templateUrl: 'login.html',
