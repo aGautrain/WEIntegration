@@ -28,4 +28,12 @@ export class OverviewPage {
         );
     }
     
+    getThumbnail(): string {
+        if(this.player != undefined && this.player != null){
+            return this.player.thumbnail;
+        } else {
+            return "http://www.isati.org/integration/imgs/unknown.png";
+        }
+    }
+    
 }

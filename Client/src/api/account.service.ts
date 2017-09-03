@@ -16,6 +16,20 @@ export class AccountHandlerService {
         
     }
     
+    upload(file: File): Promise<any> {
+    
+        let formData:FormData = new FormData();
+        formData.append('picture', file, "tmp.png");
+    
+        let headers = new Headers();
+        let options = new RequestOptions({headers: headers});
+        
+        return this.http.post('http://www.isati.org/integration/uploadScript.php', formData, options)
+            .map(response => response.json())
+            .toPromise();
+        
+    }
+    
     register(account: AccountInterface): Promise<any> {
         let headers = new Headers({'Content-Type':'application/json'});
         let options = new RequestOptions({headers:headers});

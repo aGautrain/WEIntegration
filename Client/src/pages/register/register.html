@@ -32,8 +32,10 @@
             <ion-input [(ngModel)]="name" type="text" placeholder="Nom"></ion-input>
         </ion-item>
         
+        
         <ion-item padding>
-            <ion-input [(ngModel)]="thumbnail" type="text" placeholder="Miniature"></ion-input>
+            File :
+            <input type="file" (change)="choseAvatar($event)" accept=".png,.jpg,.jpeg,.gif,.PNG,.JPG,.JPEG,.GIF">
         </ion-item>
         
         <ion-item padding>

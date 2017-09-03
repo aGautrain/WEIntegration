@@ -8,7 +8,7 @@
 <ion-content>
     <ion-item-group>
           <ion-item-divider color="light">Aujourd'hui</ion-item-divider>
-          <ion-item text-wrap *ngFor="let record of today"><b>{{record.date | date: 'HH:mm dd/MM'}}</b> {{record.desc}}</ion-item>
+          <ion-item text-wrap *ngFor="let record of todayRecords()"><b>{{record.date | date: 'HH:mm dd/MM'}}</b> {{record.desc}}</ion-item>
     </ion-item-group>
     <ion-item-group>
           <ion-item-divider color="light">La semaine dernière</ion-item-divider>

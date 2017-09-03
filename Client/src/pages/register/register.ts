@@ -1,8 +1,6 @@
 import { Component } from '@angular/core';
-import { IonicPage, NavController, LoadingController, AlertController, NavParams } from 'ionic-angular';
+import { NavController, LoadingController, AlertController, NavParams } from 'ionic-angular';
 import { AccountHandlerService } from '../../api/account.service';
-
-import { TabsPage } from '../tabs/tabs';
 
 
 @Component({
@@ -16,7 +14,7 @@ export class RegisterPage {
     name: string;
     firstName: string;
     team: string;
-    thumbnail: string;
+    thumbnail: string = "http://www.isati.org/integration/imgs/unknown.jpg";
 
   constructor(public navCtrl: NavController,
               public loadingCtrl: LoadingController,
@@ -98,6 +96,49 @@ export class RegisterPage {
                 }
             );
         }
+    }
+    
+    choseAvatar(event): void {
+    
+        let loading = this.loadingCtrl.create({
+            content: 'Téléchargement en cours..'
+        });
+        
+        loading.present();
+        
+        let fileList: FileList = event.target.files;
+        let file: File = fileList[0];
+        
+        this.accountHandler.upload(file).then(
+            res => { 
+                loading.dismiss();
+                console.log(res); 
+                
+                if(res['success']){
+                    let success = this.alertCtrl.create({
+                        title: 'Succès',
+                        subTitle: res['message'],
+                        buttons: ['OK']
+                    });
+                    
+                    success.present();
+                    this.thumbnail = "http://www.isati.org/integration/imgs/" + res['url'];
+                } else {
+                    let failure = this.alertCtrl.create({
+                        title: 'Echec',
+                        subTitle: res['message'],
+                        buttons: ['OK']
+                    });
+                    
+                    failure.present();
+                }
+                
+                
+            },
+            err => { 
+                alert(err);
+            }
+        );
     }
     
     formNotCompleted(): boolean {

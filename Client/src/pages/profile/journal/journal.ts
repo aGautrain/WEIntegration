@@ -28,4 +28,8 @@ export class JournalPage implements OnInit {
         );
     }
     
+    todayRecords(): Array<StoryRecordInterface> {
+        return this.today.slice().reverse();
+    }
+    
 }

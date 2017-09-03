@@ -139,7 +139,7 @@ export class ChallModal {
                 res => { 
                     let success = this.alertCtrl.create({
                         title: 'Succès',
-                        subTitle: 'Bien reçu capitaine !',
+                        subTitle: 'Challenge réclamé avec succès',
                         buttons: ['OK']
                     });
                     success.present();
@@ -148,9 +148,15 @@ export class ChallModal {
                     this.submited = false;
                 },
                 err => {
+                    
+                    let msg = err['_body'];
+                    if(msg == ""){
+                        msg = "Le serveur n'a pas spécifié la cause de l'erreur..";
+                    }
+                    
                     let failure = this.alertCtrl.create({
                         title: 'Echec',
-                        subTitle: err._body,
+                        subTitle: msg,
                         buttons: ['Compris']
                     });
                     console.log('ERR', err);
