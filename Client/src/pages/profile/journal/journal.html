@@ -8,14 +8,14 @@
 <ion-content>
     <ion-item-group>
           <ion-item-divider color="light">Aujourd'hui</ion-item-divider>
-          <ion-item text-wrap *ngFor="let record of todayRecords()"><b>{{record.date | date: 'HH:mm dd/MM'}}</b> {{record.desc}}</ion-item>
+          <ion-item text-wrap *ngFor="let record of records | filterDate: 'today' | dateDesc"><b>{{record.date | date: 'HH:mm dd/MM' }}</b> {{record.desc}}</ion-item>
     </ion-item-group>
     <ion-item-group>
           <ion-item-divider color="light">La semaine dernière</ion-item-divider>
-          <ion-item text-wrap *ngFor="let record of lastWeek"><b>{{record.date}}</b> {{record.desc}}</ion-item>
+          <ion-item text-wrap *ngFor="let record of records | filterDate: 'week' | dateDesc"><b>{{record.date | date: 'HH:mm dd/MM' }}</b> {{record.desc}}</ion-item>
     </ion-item-group>
     <ion-item-group>
           <ion-item-divider color="light">Depuis le début</ion-item-divider>
-          <ion-item text-wrap *ngFor="let record of sinceStart"><b>{{record.date}}</b> {{record.desc}}</ion-item>
+          <ion-item text-wrap *ngFor="let record of records | filterDate: 'before' | dateDesc"><b>{{record.date | date: 'HH:mm dd/MM' }}</b> {{record.desc}}</ion-item>
     </ion-item-group>
 </ion-content>

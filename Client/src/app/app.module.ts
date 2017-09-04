@@ -28,6 +28,8 @@ import { HttpModule } from '@angular/http';
 import { AccountHandlerService } from '../api/account.service';
 import { TeamManagerService } from '../api/manager.service';
 
+import { OrderByDatePipe, FilterTodayPipe } from '../api/pipes';
+
 @NgModule({
   declarations: [
     MyApp,
@@ -43,7 +45,9 @@ import { TeamManagerService } from '../api/manager.service';
     ChallModal,
     ClaimModal,
     JournalPage,
-    TabsPage
+    TabsPage,
+    OrderByDatePipe,
+    FilterTodayPipe
   ],
   imports: [
     BrowserModule,
