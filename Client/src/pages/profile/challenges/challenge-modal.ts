@@ -1,8 +1,10 @@
 import { Component } from '@angular/core';
-import { NavParams, Platform, ViewController, AlertController } from 'ionic-angular';
+import { NavParams, Platform, ViewController, AlertController, ModalController } from 'ionic-angular';
 import { ChallengeInterface, ChallengeState } from '../../../api/interfaces.service';
 import { TeamManagerService } from '../../../api/manager.service';
 import { AccountHandlerService } from '../../../api/account.service';
+
+import { ClaimModal } from './claim-modal';
 
 @Component({
   templateUrl: 'challenge-modal.html'
@@ -15,6 +17,7 @@ export class ChallModal {
     constructor(public platform: Platform,
                 public params: NavParams,
                 public viewCtrl: ViewController,
+                public modalCtrl: ModalController,
                 public alertCtrl: AlertController,
                 private manager: TeamManagerService,
                 private account: AccountHandlerService) {
@@ -98,73 +101,15 @@ export class ChallModal {
         return this.challenge.repeated || 0;
     }
     
-    claim(): void {
-          
-        if(this.isAvailable()){
-            this.submited = true;
-            
-            var prompt = this.alertCtrl.create({
-                title: 'Commentaire',
-                message: 'Laisse nous un commentaire si tu le souhaites !',
-                inputs: [
-                    {
-                        name: 'comment',
-                        placeholder: ''
-                    }
-                ],
-                buttons: [
-                    {
-                        text: 'Pas besoin',
-                        role: 'cancel',
-                        handler: data => {
-                            this.finalize("");
-                        }
-                    },
-                    {
-                        text: 'Envoyer',
-                        handler: data => {
-                            this.finalize(data.comment);
-                        }
-                    }
-                ]
-            });
-            
-            prompt.present();
-            
-        }
-    }
-    
-    finalize(comment: string): void {
-        this.manager.claim(this.challenge.name, this.account.getId(), comment).then(
-                res => { 
-                    let success = this.alertCtrl.create({
-                        title: 'Succès',
-                        subTitle: 'Challenge réclamé avec succès',
-                        buttons: ['OK']
-                    });
-                    success.present();
-                    
-                    this.dismiss(); 
-                    this.submited = false;
-                },
-                err => {
-                    
-                    let msg = err['_body'];
-                    if(msg == ""){
-                        msg = "Le serveur n'a pas spécifié la cause de l'erreur..";
-                    }
-                    
-                    let failure = this.alertCtrl.create({
-                        title: 'Echec',
-                        subTitle: msg,
-                        buttons: ['Compris']
-                    });
-                    console.log('ERR', err);
-                    
-                    failure.present();
-                    this.submited = false;
-                }
-        );
+    openClaim() {
+        let modal = this.modalCtrl.create(ClaimModal, {chall: this.challenge});
+        
+        modal.onDidDismiss(data => {
+           if(data['submited'] && data['success']){
+               this.dismiss();
+           }
+        });
+        modal.present();
     }
 
   dismiss() {

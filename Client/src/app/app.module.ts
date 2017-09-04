@@ -16,6 +16,7 @@ import { ProfilePage } from '../pages/profile/profile';
 import { OverviewPage } from '../pages/profile/overview/overview';
 import { ChallengesPage } from '../pages/profile/challenges/challenges';
 import { ChallModal } from '../pages/profile/challenges/challenge-modal';
+import { ClaimModal } from '../pages/profile/challenges/claim-modal';
 import { JournalPage } from '../pages/profile/journal/journal';
 
 import { TabsPage } from '../pages/tabs/tabs';
@@ -40,6 +41,7 @@ import { TeamManagerService } from '../api/manager.service';
     OverviewPage,
     ChallengesPage,
     ChallModal,
+    ClaimModal,
     JournalPage,
     TabsPage
   ],
@@ -61,6 +63,7 @@ import { TeamManagerService } from '../api/manager.service';
     OverviewPage,
     ChallengesPage,
     ChallModal,
+    ClaimModal,
     JournalPage,
     TabsPage
   ],

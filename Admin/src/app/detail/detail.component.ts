@@ -16,7 +16,7 @@ import {
 export class DetailComponent implements OnInit {
 
     claimExamined: Claim = null;
-    comment: string = "";
+    comment: string = '';
 
     constructor(private router: Router, private api: AdminService) {}
 
@@ -26,7 +26,7 @@ export class DetailComponent implements OnInit {
             this.router.navigate(['/']);
         }
         this.claimExamined = this.api.getEdited();
-        this.comment = "";
+        this.comment = '';
     }
 
     deny(): void {
@@ -56,15 +56,19 @@ export class DetailComponent implements OnInit {
                     console.log('Error while accepting');
                     alert(err);
                 }
-            ); 
+            );
         }
     }
-    
+
     back(): void {
         this.router.navigate(['/']);
     }
-    
+
     playerLeftComment(): boolean {
-        return this.claimExamined.claimerComment != "";
+        return this.claimExamined.claimerComment !== '';
+    }
+
+    playerLeftProof(): boolean {
+        return this.claimExamined.claimerProof !== '';
     }
 }

@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { Http }from '@angular/http';
+import { Http, Headers, RequestOptions } from '@angular/http';
 import { TeamInterface, PlayerInterface } from './interfaces.service';
 import 'rxjs/add/operator/toPromise';
 import 'rxjs/add/operator/map';
@@ -66,9 +66,20 @@ export class TeamManagerService {
             .toPromise();
     }
     
-    claim(challengeId: string, playerId: number, comment: string): Promise<any> {
-        // TODO : Remove the id= part once the app will be hosted online and not on localhost (cookie problem)
-        return this.http.get(server + 'claim?id=' + playerId + '&challenge=' + challengeId + '&comment=' + comment)
+    claim(challengeId: string, playerId: string, givenComment: string, proofUrl: string): Promise<any> {
+        
+        
+        let headers = new Headers({'Content-Type':'application/json'});
+        let options = new RequestOptions({headers:headers});
+        
+        let data = {
+            id: playerId,
+            challenge: challengeId,
+            comment: givenComment,
+            proof: proofUrl
+        };
+        
+        return this.http.post(server + 'claim', data, options)
             .map(response => response.json())
             .toPromise();
     }

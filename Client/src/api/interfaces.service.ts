@@ -47,7 +47,7 @@ export interface PlayerDetailsInterface {
     isCaptain: boolean;
     createdAt?: Date;
     updatedAt?: Date;
-    id: number;
+    id: string;
     
     points?: number;
 }

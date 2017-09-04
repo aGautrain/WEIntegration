@@ -1,0 +1,31 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-title>
+      Réclamation
+    </ion-title>
+    <ion-buttons start>
+        <button ion-button (click)="dismiss()">
+            Revenir au challenge
+        </button>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content padding>
+    
+    <ion-list> 
+        
+        <ion-item text-wrap>
+            <ion-label color="primary">Commentaire (facultatif) :</ion-label>
+            <ion-input [(ngModel)]="comment" type="text" placeholder="Pas trop trop long mais suffisament quand même !"></ion-input>
+        </ion-item>
+        
+        <ion-item text-wrap>
+            <!--<ion-label color="primary">Preuve (si nécessaire) :</ion-label><br/>-->
+            <span class="fake-label">Preuve (si nécessaire) :</span> <input type="file" (change)="uploadProof($event)" accept=".png,.jpg,.jpeg,.gif">
+        </ion-item>
+        
+    </ion-list>
+    
+    <button (click)="finalize()" ion-button large full color="primary">Réclamer</button>
+</ion-content>

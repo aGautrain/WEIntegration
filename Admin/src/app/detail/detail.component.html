@@ -20,6 +20,11 @@
         <p>{{ claimExamined?.claimerComment }}</p>
     </div>
     
+    <div *ngIf="playerLeftProof()" class="form-group">
+      <label class="control-label">Lien vers preuve :</label>
+        <p><a [href]="claimExamined?.claimerProof" target="_blank">{{ claimExamined?.claimerProof }}</a></p>
+    </div>
+    
     <div class="form-group">
       <label class="control-label">Autres infos :</label>
         <ul>

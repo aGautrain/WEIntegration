@@ -10,7 +10,7 @@ const server: string = 'http://151.80.140.30/';
 @Injectable()
 export class AccountHandlerService {
     
-    id: number;
+    id: string;
     
     constructor(private http: Http){
         
@@ -50,11 +50,11 @@ export class AccountHandlerService {
         
     }
     
-    getId(): number {
+    getId(): string {
         return this.id;
     }
     
-    setId(id: number): void {
+    setId(id: string): void {
         console.log('current player id is now : ' + id);
         this.id = id;
     }

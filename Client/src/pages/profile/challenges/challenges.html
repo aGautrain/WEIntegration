@@ -6,65 +6,30 @@
 
   <ion-content padding class="challenges-list">
 
-<ion-list no-border>
-
+      <ion-list no-border>
     
-    <div *ngFor="let key of mapKeys()">
-        <ion-list-header>
-            {{key}}
-        </ion-list-header>
-        
-        <ion-item *ngIf="mapChallenges(key).length === 0" text-wrap>
-            <ion-label>
-                Cette catégorie ne contient aucun challenge.
-            </ion-label>
-        </ion-item>
+        <div *ngFor="let key of mapKeys()">
+            <ion-list-header>
+                {{key}}
+            </ion-list-header>
 
-        <ion-item *ngFor="let challenge of mapChallenges(key)" (click)="openChall(challenge)">
-            <ion-label>
-               <ion-icon *ngIf="challenge.collective" name="medal"></ion-icon>
-               <ion-icon *ngIf="challenge.repeatable" name="infinite"></ion-icon>
-                {{challenge.name}}
-               <b *ngIf="challenge.repeatable"> x{{getRepetitions(challenge)}}</b>
-            </ion-label>
-            <ion-icon *ngIf="pendingOrAccepted(challenge)" item-end [name]="statutIcon(challenge)" [ngClass]="statutColor(challenge)"></ion-icon>
-        </ion-item>
-    </div>
-    
-    
-<!--
-        <ion-item (click)="openChall({id:1})">
-            <ion-label>
-                Pyramide
-            </ion-label>
-            <ion-icon item-end name="close" class="failure"></ion-icon>
-        </ion-item>
+            <ion-item *ngIf="mapChallenges(key).length === 0" text-wrap>
+                <ion-label>
+                    Cette catégorie ne contient aucun challenge.
+                </ion-label>
+            </ion-item>
 
-    <ion-list-header>
-            Solo
-    </ion-list-header>
-
-        <ion-item (click)="openChall({id:2})">
-            <ion-label>
-                Gervais pas frais
-            </ion-label>
-            <ion-icon item-end name="close" class="failure"></ion-icon>
-        </ion-item>
-
-        <ion-item (click)="openChall({id:3})">
-            <ion-label>
-                Isati'butt
-            </ion-label>
-            <ion-icon item-end name="checkmark" class="success"></ion-icon>
-        </ion-item>
-
-        <ion-item (click)="openChall({id:4})">
-            <ion-label>
-                Epine ?!
-            </ion-label>
-            <ion-icon item-end name="help" class="waiting"></ion-icon>
-        </ion-item>
--->
+            <ion-item *ngFor="let challenge of mapChallenges(key)" (click)="openChall(challenge)">
+                <ion-label>
+                   <ion-icon *ngIf="challenge.collective" name="medal"></ion-icon>
+                   <ion-icon *ngIf="challenge.repeatable" name="infinite"></ion-icon>
+                    {{challenge.name}}
+                   <b *ngIf="challenge.repeatable"> x{{getRepetitions(challenge)}}</b>
+                </ion-label>
+                <ion-icon *ngIf="pendingOrAccepted(challenge)" item-end [name]="statutIcon(challenge)" [ngClass]="statutColor(challenge)"></ion-icon>
+            </ion-item>
+        </div>
+          
     </ion-list>
 
 </ion-content>
