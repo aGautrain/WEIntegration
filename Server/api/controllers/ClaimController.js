@@ -9,36 +9,45 @@ module.exports = {
 	
 	claim: function(req,res){
 		// CHECK PARAMS
-		if(_.isUndefined(req.query.id)){
+		if(_.isUndefined(req.body['id'])){
 			return res.forbidden('Tu n\'es plus connecté');
 		}
 		
-		if(_.isUndefined(req.query.challenge)){
+		if(_.isUndefined(req.body['challenge'])){
 			return res.forbidden('Ce challenge n\'existe pas !');
 		}
 		
 		var comment = "";
-		if(!(_.isUndefined(req.query.comment))){
-			comment = req.query.comment;
+		if(!(_.isUndefined(req.body['comment']))){
+			comment = req.body['comment'];
 		}
+		
+		var proofUrl = "";
+		if(!(_.isUndefined(req.body['proof']))){
+			proofUrl = req.body['proof'];
+		}
+		
+		
 		// END CHECK PARAMS
-		sails.log.debug('Player #' + req.query.id + ' is claiming challenge "' + req.query.challenge + '"');
+		sails.log.debug('Player #' + req.body['id'] + ' is claiming challenge "' + req.body['challenge'] + '"');
 		
 		// CHECK CAPTAIN STATUS
 		Player
-		.findOne(req.query.id)
+		.findOne(req.body['id'])
 		.exec(function(err, playerFound){
 			if(err) return res.forbidden('Quelque chose ne fonctionne pas..');
 			if(!playerFound) return res.forbidden('Tu n\'es plus connecté');
 			
 			var isCaptain = playerFound.isCaptain;
+			sails.log.debug('Player is captain : ' + isCaptain);
 			
 			// CLAIM CHALLENGE
 			Claim.claimChallenge({
-				player: req.query.id,
-				challenge: req.query.challenge,
+				player: req.body['id'],
+				challenge: req.body['challenge'],
 				captain: isCaptain,
-				comment: comment
+				comment: comment,
+				proof: proofUrl
 			}, function(err, result){
 				if(err) {
 					sails.log.error(err);

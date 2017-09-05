@@ -28,6 +28,6 @@ module.exports.models = {
   *                                                                          *
   ***************************************************************************/
   // TODO : change on production
-  migrate: 'drop'
+  migrate: 'safe'
 
 };

@@ -54,8 +54,9 @@ module.exports = {
 		
 		var inputChall = opts.challenge; // challenge id (name)
 		var inputPlayer = opts.player; // player id
-		var inputCaptain = opts.captain; // player is captain (boolean)
+		var inputCaptain = opts.captain || false; // player is captain (boolean)
 		var inputComment = opts.comment || "";
+		var inputProof = opts.proof || "";
 		
 		sails.log.debug('Static method claimChallenge invoked with : #' + inputPlayer + ' and "' + inputChall + '"');
 		
@@ -124,7 +125,7 @@ module.exports = {
 					resolution: "waiting",
 					claimerComment: inputComment,
 					solverComment: "",
-					claimerProof: "Not implemented"
+					claimerProof: inputProof
 				}).exec(function (err, created){
 					if(err) return cb(err);
 					

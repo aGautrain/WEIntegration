@@ -37,7 +37,7 @@ module.exports.routes = {
   'post /login': 'PlayerController.login',
   'get /me': 'PlayerController.me',
   'get /logout': 'PlayerController.logout',
-  'get /claim': 'ClaimController.claim',
+  'post /claim': 'ClaimController.claim',
   'get /journal': 'ClaimController.story',
   'get /team': 'TeamController.getTeam',
   'get /teams': 'TeamController.getTeams',

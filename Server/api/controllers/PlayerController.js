@@ -23,7 +23,7 @@ module.exports = {
 			
 			if(err) return res.serverError();
 			
-			if(!account) return res.notFound('No matching account for the given credentials');
+			if(!account) return res.notFound('Aucun compte trouvé, veuillez réessayer');
 			
 			sails.log.info('User logged in with id#' + account.playerRef.id);
 			
