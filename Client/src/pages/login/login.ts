@@ -50,11 +50,7 @@ export class LoginPage {
                 buttons: ['Ok']
             });
             
-            let failure = this.alertCtrl.create({
-                title: 'Echec',
-                subTitle: 'Le serveur a refusé la connexion',
-                buttons: ['Réessayer']
-            });
+            
 
             loading.present();
             
@@ -73,7 +69,17 @@ export class LoginPage {
                 },
                 error => {
                     console.log('Error occurred during connection process');
+                    
+                    let msg = error['_body'] || 'Le serveur a refusé la connexion sans préciser l\'erreur.';
+                    
+                    let failure = this.alertCtrl.create({
+                        title: 'Echec',
+                        subTitle: msg,
+                        buttons: ['Réessayer']
+                    });
+                    
                     console.log(error);
+                    
                     loading.dismiss();
                     failure.present();
                     

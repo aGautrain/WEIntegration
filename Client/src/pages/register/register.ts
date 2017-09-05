@@ -53,11 +53,7 @@ export class RegisterPage {
                 buttons: ['Merci']
             });
             
-            let failure = this.alertCtrl.create({
-                title: 'Echec',
-                subTitle: 'Le serveur a refusé l\'inscription',
-                buttons: ['Dommage']
-            });
+            
             
             let server = this.alertCtrl.create({
                 title: 'Echec',
@@ -84,6 +80,16 @@ export class RegisterPage {
                     success.present();
                 },
                 error => {
+                    
+                    let msg = error['_body'] || 'Le serveur a refusé l\'inscription sans préciser l\'erreur.';
+                    
+                    let failure = this.alertCtrl.create({
+                        title: 'Echec',
+                        subTitle: msg,
+                        buttons: ['Dommage']
+                    });
+                    
+                    
                     console.log('Error occurred during register process');
                     console.log(error);
                     loading.dismiss();
