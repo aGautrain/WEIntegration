@@ -19,7 +19,7 @@
       "testTsconfig": "tsconfig.spec.json",
       "prefix": "app",
       "styles": [
-        "lumen.css",
+        "cosmo.css",
         "styles.css"
       ],
       "scripts": [],

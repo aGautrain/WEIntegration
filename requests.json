@@ -1,0 +1,327 @@
+{
+	"variables": [],
+	"info": {
+		"name": "WEI",
+		"_postman_id": "22cb2e59-822d-9cd0-146d-34a038246de9",
+		"description": "",
+		"schema": "https://schema.getpostman.com/json/collection/v2.0.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "POST /register",
+			"request": {
+				"url": "localhost:1337/register",
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"description": ""
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n\t\"email\": \"test@mail.com\",\n\t\"password\": \"123\",\n\t\"name\": \"Bob\",\n\t\"firstName\": \"Dylan\",\n\t\"team\": \"Minions\",\n\t\"thumbnail\": \"http://isati.org/integration/imgs/unknown.jpg\"\n}"
+				},
+				"description": "Registering a new account given the data provided as JSON body"
+			},
+			"response": []
+		},
+		{
+			"name": "POST /login",
+			"request": {
+				"url": "localhost:1337/login",
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"description": ""
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n\t\"email\": \"test@mail.com\",\n\t\"password\": \"123\"\n}"
+				},
+				"description": "Login account with given credentials"
+			},
+			"response": []
+		},
+		{
+			"name": "POST /me/thumbnail",
+			"request": {
+				"url": "localhost:1337/me/thumbnail",
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"description": ""
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n\t\"thumbnail\":\"wuuuut\",\n\t\"player\": \"59afd2aa099b11af71d3d6dd\"\n}"
+				},
+				"description": "Update thumbnail of the player with given id"
+			},
+			"response": []
+		},
+		{
+			"name": "GET /me",
+			"request": {
+				"url": {
+					"raw": "localhost:1337/me?id=59afd2aa099b11af71d3d6dd",
+					"host": [
+						"localhost"
+					],
+					"port": "1337",
+					"path": [
+						"me"
+					],
+					"query": [
+						{
+							"key": "id",
+							"value": "59afd2aa099b11af71d3d6dd",
+							"equals": true,
+							"description": ""
+						}
+					],
+					"variable": []
+				},
+				"method": "GET",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"description": ""
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n\t\"email\": \"test@mail.com\",\n\t\"password\": \"123\"\n}"
+				},
+				"description": "Get informations about the current logged in player"
+			},
+			"response": []
+		},
+		{
+			"name": "GET /journal",
+			"request": {
+				"url": {
+					"raw": "localhost:1337/journal?id=59afd2aa099b11af71d3d6dd",
+					"host": [
+						"localhost"
+					],
+					"port": "1337",
+					"path": [
+						"journal"
+					],
+					"query": [
+						{
+							"key": "id",
+							"value": "59afd2aa099b11af71d3d6dd",
+							"equals": true,
+							"description": ""
+						}
+					],
+					"variable": []
+				},
+				"method": "GET",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"description": ""
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n\t\"email\": \"test@mail.com\",\n\t\"password\": \"123\"\n}"
+				},
+				"description": "Get story about the current logged in player"
+			},
+			"response": []
+		},
+		{
+			"name": "GET /teams",
+			"request": {
+				"url": "localhost:1337/teams",
+				"method": "GET",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"description": ""
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n\t\"email\": \"test@mail.com\",\n\t\"password\": \"123\"\n}"
+				},
+				"description": "Get existing teams and their members"
+			},
+			"response": []
+		},
+		{
+			"name": "[admin] GET /admin/list",
+			"request": {
+				"url": "localhost:1337/admin/list",
+				"method": "GET",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"description": ""
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n\t\"email\": \"test@mail.com\",\n\t\"password\": \"123\"\n}"
+				},
+				"description": "Get list of all the claims (solved and pending)"
+			},
+			"response": []
+		},
+		{
+			"name": "[admin] GET /admin/teams",
+			"request": {
+				"url": "localhost:1337/admin/teams",
+				"method": "GET",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"description": ""
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n\t\"email\": \"test@mail.com\",\n\t\"password\": \"123\"\n}"
+				},
+				"description": "Get list of all the teams and their advantages"
+			},
+			"response": []
+		},
+		{
+			"name": "[admin] GET /admin/players",
+			"request": {
+				"url": "localhost:1337/admin/players",
+				"method": "GET",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"description": ""
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n\t\"email\": \"test@mail.com\",\n\t\"password\": \"123\"\n}"
+				},
+				"description": "Get list of all the players and their advantages"
+			},
+			"response": []
+		},
+		{
+			"name": "[admin] POST /admin/advantage",
+			"request": {
+				"url": "localhost:1337/admin/advantage",
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"description": ""
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n\t\"team\": \"Minions\",\n\t\"advantage\": 658,\n\t\"comment\": \"Requête POSTMAN pré-construite\"\n}"
+				},
+				"description": "Set the new advantage of a TEAM"
+			},
+			"response": []
+		},
+		{
+			"name": "[admin] POST /admin/advantage/player",
+			"request": {
+				"url": "localhost:1337/admin/advantage/player",
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"description": ""
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n\t\"team\": \"Minions\",\n\t\"advantage\": 1000,\n\t\"player\": \"59b3e80ce7ea45682c0e7927\",\n\t\"comment\": \"Requête POSTMAN pré-construite !\"\n}"
+				},
+				"description": "Set the new advantage of a PLAYER"
+			},
+			"response": []
+		},
+		{
+			"name": "[admin] POST /admin/note/write",
+			"request": {
+				"url": "localhost:1337/admin/note/write",
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"description": ""
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n\t\"content\":\"Ici Faustine, coucou le serveur\"\n}"
+				},
+				"description": "Write a global note which will be available for all players"
+			},
+			"response": []
+		},
+		{
+			"name": "[admin] POST /admin/challenge/revert",
+			"request": {
+				"url": "localhost:1337/admin/challenge/revert",
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"description": ""
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n\t\"challenge\":\"Rouge comme une tomate\",\n\t\"player\": \"59afd2aa099b11af71d3d6dd\"\n}"
+				},
+				"description": "Remove challenge from player collection Done and put it back to collection Todo"
+			},
+			"response": []
+		},
+		{
+			"name": "[admin] POST /admin/note/write/player",
+			"request": {
+				"url": "localhost:1337/admin/note/write/player",
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"description": ""
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n\t\"content\":\"Challenge Rouge comme une tomate retiré, on s'était trompé\",\n\t\"player\": \"59afd2aa099b11af71d3d6dd\"\n}"
+				},
+				"description": "Write a note which will be available for only the target player"
+			},
+			"response": []
+		}
+	]
+}

@@ -1,35 +1,67 @@
 <article>
+
+    <div class="form-group">
+        <label for="teamFilter">Select a team :</label>
+        <select class="form-control" id="teamFilter" [(ngModel)]="teamChosen">
+      <option *ngFor="let team of teams" [value]="team?.name">{{team?.name}}</option>
+      <option value="*">Toutes</option>
+    </select>
+    </div>
+
+    <div class="form-group">
+        <label for="limitFilter">Limit to ...</label>
+        <select class="form-control" id="limitFilter" [(ngModel)]="limitChosen">
+      <option value="10">10 records</option>
+      <option value="20">20 records</option>
+      <option value="50">50 records</option>
+      <option value="100">100 records</option>
+      <option value="-1">all records</option>
+    </select>
+    </div>
+
+    <div class="form-group text-center">
+        <button type="button" class="btn btn-primary" (click)="fetchData()">RELOAD SERVER DATA</button>
+    </div>
+
+</article>
+
+
+<article>
     <h1>
         <span class="fa-stack fa-lg">
           <i class="fa fa-square fa-stack-2x"></i>
           <i class="fa fa-clock-o fa-stack-1x fa-inverse"></i>
-        </span>
-         Last challenges claimed
+        </span> Last challenges claimed
     </h1>
     <table class="challenges-todo table table-striped table-hover ">
-      <thead>
-        <tr>
-          <th>ID</th>
-          <th>Challenge</th>
-          <th>Claimer</th>
-          <th>Date</th>
-        </tr>
-      </thead>
-      <tbody>
-        <tr *ngFor="let claim of waitingClaims()" (click)="verify(claim)">
-          
-          <td>{{claim?.id}}</td>
-          <td>{{claim?.challenge?.name}}</td>
-          <td>{{claim?.claimer?.firstName}} {{claim?.claimer?.name}}</td>
-          <td>{{claim?.createdAt | date: 'HH:mm:ss, le dd/MM'}}</td>
-          <div class="challenges-todo--selector">
-            <i class="fa fa-chevron-right" aria-hidden="true"></i>  
-          </div>
-        </tr>
+        <caption> {{getNbWaitingClaims()}} claims waiting.</caption>
+        <thead>
+            <tr>
+                <th>ID</th>
+                <th>Challenge</th>
+                <th>Claimer</th>
+                <th>Date</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr *ngFor="let claim of claims | reverseOrder | selectTeam: teamChosen:'claim' | selectClaim:'waiting':limitChosen" (click)="verify(claim)">
+
+                <td>{{claim?.id}}</td>
+                <td>{{claim?.challenge?.name}}</td>
+                <td>{{claim?.claimer?.firstName}} {{claim?.claimer?.name}}</td>
+                <td>{{claim?.createdAt | date: 'HH:mm:ss, le dd/MM'}}</td>
+                <div class="challenges-todo--selector">
+                    <i class="fa fa-chevron-right" aria-hidden="true"></i>
+                </div>
+            </tr>
+            <tr *ngIf="getNbWaitingClaims() === 0" class="text-center">
+                <td colspan="4"><b>No pending claim found, good job !</b></td>
+            </tr>
 
     </table>
-    
-    <p>Click on a row to start verification process</p>
+
+    <p *ngIf="getNbWaitingClaims() !== 0"><i class="fa fa-info"></i> - Click on a row to start verification process</p>
+
 </article>
 
 <article>
@@ -37,26 +69,29 @@
         <span class="fa-stack fa-lg">
           <i class="fa fa-square fa-stack-2x"></i>
           <i class="fa fa-flag fa-stack-1x fa-inverse"></i>
-        </span>
-        Challenges verified
+        </span> Challenges verified
     </h1>
     <table class="table table-striped table-hover ">
-      <thead>
-        <tr>
-          <th>ID</th>
-          <th>Challenge</th>
-          <th>Claimer</th>
-          <th>Date</th>
-        </tr>
-      </thead>
-      <tbody>
-        <tr *ngFor="let claim of resolvedClaims()" [ngClass]="{'success': isAccepted(claim), 'danger': isRefused(claim)}">
-          <td>{{claim?.id}}</td>
-          <td>{{claim?.challenge?.name}}</td>
-          <td>{{claim?.claimer?.firstName}} {{claim?.claimer?.name}}</td>
-          <td>{{claim?.createdAt | date: 'HH:mm:ss, le dd/MM'}}</td>
-        </tr>
-      </tbody>
+        <caption> {{getNbResolvedClaims()}} claims yet solved.</caption>
+        <thead>
+            <tr>
+                <th>ID</th>
+                <th>Challenge</th>
+                <th>Claimer</th>
+                <th>Date</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr *ngFor="let claim of claims | reverseOrder | selectTeam: teamChosen:'claim' | selectClaim:'resolved':limitChosen" [ngClass]="{'success': isAccepted(claim), 'danger': isRefused(claim)}">
+                <td>{{claim?.id}}</td>
+                <td>{{claim?.challenge?.name}}</td>
+                <td>{{claim?.claimer?.firstName}} {{claim?.claimer?.name}}</td>
+                <td>{{claim?.updatedAt | date: 'HH:mm:ss, le dd/MM'}}</td>
+            </tr>
+            <tr *ngIf="getNbResolvedClaims() === 0" class="text-center">
+                <td colspan="4"><b>No claim yet solved</b></td>
+            </tr>
+        </tbody>
     </table>
 </article>
 
@@ -65,28 +100,139 @@
         <span class="fa-stack fa-lg">
           <i class="fa fa-square fa-stack-2x"></i>
           <i class="fa fa-trophy fa-stack-1x fa-inverse"></i>
-        </span>
-        Team advantages
+        </span> Team advantages
     </h1>
-    
+
     <table class="table table-striped table-hover ">
-      <thead>
-        <tr>
-          <th>ID (name)</th>
-          <th>Advantage</th>
-          <th>Thumbnail</th>
-        </tr>
-      </thead>
-      <tbody>
-        <tr *ngFor="let team of teams" (click)="advantage(team)">
-          <td>{{team?.name}}</td>
-          <td>{{team?.advantage}}</td>
-          <td>{{team?.thumbnail}}</td>
-        </tr>
-      </tbody>
+        <thead>
+            <tr>
+                <th>ID (name)</th>
+                <th>Thumbnail</th>
+                <th>Advantage</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr *ngFor="let team of teams | selectTeam: teamChosen:'team'">
+                <td>{{team?.name}}</td>
+                <td><img [src]="team?.thumbnail" alt="thumbnail not found" width="50px" height="50px" /></td>
+                <td>{{team?.advantage}}</td>
+                <td>
+                    <span (click)="advantage(team)" class="fa-stack fa-lg yellow actions">
+                        <i class="fa fa-square fa-stack-2x"></i>
+                        <i class="fa fa-trophy fa-stack-1x fa-inverse"></i>
+                    </span>
+                    <span class="fa-stack fa-lg green actions">
+                        <i class="fa fa-square fa-stack-2x"></i>
+                        <i class="fa fa-pencil fa-stack-1x fa-inverse"></i>
+                    </span>
+                    <span (click)="actionNotes(team)" class="fa-stack fa-lg blue actions">
+                        <i class="fa fa-square fa-stack-2x"></i>
+                        <i class="fa fa-commenting fa-stack-1x fa-inverse"></i>
+                    </span>
+                </td>
+            </tr>
+            <tr *ngIf="teams.length === 0" class="text-center">
+                <td colspan="4"><b>No existing team found</b></td>
+            </tr>
+        </tbody>
     </table>
-    
-    <p>Click on a row to set team's advantage</p>
-    
+
+    <p *ngIf="teams.length !== 0"><i class="fa fa-info"></i> - Click on a row to set team's advantage</p>
+
 
 </article>
+
+
+
+
+<article>
+    <h1>
+        <span class="fa-stack fa-lg">
+          <i class="fa fa-square fa-stack-2x"></i>
+          <i class="fa fa-user fa-stack-1x fa-inverse"></i>
+        </span> Player list
+    </h1>
+
+    <p *ngIf="teams.length === 0"><b>No existing team found</b></p>
+
+    <table *ngFor="let team of teams | selectTeam: teamChosen:'team'" class="table table-striped table-hover">
+        <caption>{{team?.name}}</caption>
+        <thead>
+            <tr>
+                <th>ID</th>
+                <th>Advantage</th>
+                <th>First name / Name</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+            <!-- TODO (click)="advantagePlayer(player)" -->
+            <tr *ngFor="let player of players | selectTeam: team.name:'player'">
+                <td>{{player?.id}}</td>
+                <td>{{player?.advantage}}</td>
+                <td>{{player?.firstName}} {{player?.name}}</td>
+                <td>
+                    <span class="fa-stack fa-lg yellow actions">
+                        <i class="fa fa-square fa-stack-2x"></i>
+                        <i class="fa fa-trophy fa-stack-1x fa-inverse"></i>
+                    </span>
+                    <span class="fa-stack fa-lg green actions">
+                        <i class="fa fa-square fa-stack-2x"></i>
+                        <i class="fa fa-pencil fa-stack-1x fa-inverse"></i>
+                    </span>
+                    <span (click)="actionNotes(player)" class="fa-stack fa-lg blue actions">
+                        <i class="fa fa-square fa-stack-2x"></i>
+                        <i class="fa fa-commenting fa-stack-1x fa-inverse"></i>
+                    </span>
+                    <span (click)="actionSettings(player)" class="fa-stack fa-lg grey actions">
+                        <i class="fa fa-square fa-stack-2x"></i>
+                        <i class="fa fa-cog fa-stack-1x fa-inverse"></i>
+                    </span>
+                    <span class="fa-stack fa-lg red actions">
+                        <i class="fa fa-square fa-stack-2x"></i>
+                        <i class="fa fa-ban fa-stack-1x fa-inverse"></i>
+                    </span>
+                </td>
+            </tr>
+            <tr *ngIf="players.length === 0">
+                <td colspan="4">No player found for that team.</td>
+            </tr>
+        </tbody>
+    </table>
+
+    <!--<p>Click on a row to set player's advantage</p>-->
+
+
+</article>
+
+<div *ngIf="isLoading" id="loading-icon">
+    <i class="fa fa-refresh fa-spin fa-3x fa-fw"></i>
+    <span class="sr-only">Loading...</span>
+</div>
+
+
+
+<div *ngIf="isShowingNotes" class="fader"></div>
+
+<div *ngIf="isShowingNotes" class="modal">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button (click)="closingNotes()" type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+        <h4 class="modal-title">Notes for {{ getEntityDesignation() }} </h4>
+      </div>
+      <div class="modal-body">
+        <p *ngFor="let note of getEntityNotes()">
+          {{ note?.content }}
+        </p>
+        <p *ngIf="getEntityNotes().length === 0">
+            <b>There is no notes.</b>  
+        </p>
+      </div>
+      <div class="modal-footer">
+        <button (click)="closingNotes()" type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+      </div>
+    </div>
+  </div>
+</div>

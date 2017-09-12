@@ -27,6 +27,7 @@ export interface Player {
     firstName: string;
     team: string;
     thumbnail: string;
+    advantage: number;
     isCaptain: boolean;
     createdAt: Date;
     updatedAt: Date;
@@ -40,4 +41,14 @@ export interface Team {
     advantage: number;
     createdAt?: Date;
     updatedAt?: Date;
+}
+
+export interface Note {
+    content: string;
+    team?: string;
+    player?: string;
+    global?: boolean;
+    createdAt: Date;
+    updatedAt: Date;
+    id: string;
 }

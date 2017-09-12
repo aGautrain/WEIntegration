@@ -10,6 +10,8 @@ import { DetailComponent } from './detail/detail.component';
 
 import { AdminService } from './admin.service';
 
+import {SelectTeamPipe, SelectClaimPipe, ReverseOrderPipe } from './pipes';
+
 const appRoutes: Routes = [
     {
         path: 'detail', component: DetailComponent
@@ -26,7 +28,10 @@ const appRoutes: Routes = [
   declarations: [
     AppComponent,
     OverviewComponent,
-    DetailComponent
+    DetailComponent,
+    SelectTeamPipe,
+    SelectClaimPipe,
+    ReverseOrderPipe
   ],
   imports: [
     BrowserModule,
