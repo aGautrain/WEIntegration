@@ -11,7 +11,7 @@
 
 module.exports.bootstrap = function (cb) {
 
-
+    /*
     // CHALLENGES INTIALIZATION
     var challs = [
 		// VIE DE L'ECOLE
@@ -404,62 +404,62 @@ module.exports.bootstrap = function (cb) {
             collective: true,
             reward: 40
 		}
-	];
+	];*/
+    /*
+        var teams = [
+            {
+                name: 'ToyStory',
+                thumbnail: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQDjMGZaNTEpTuGvCT9e5h8JLQ3xnDHESmP2Rt_r6yfaCSjLfmuJZwyazk',
+                members: []
+    		},
+            {
+                name: 'Harry Potter',
+                thumbnail: 'http://www.franckymagie.com/images/technique/tour-de-magie.png',
+                members: []
+    		},
+            {
+                name: 'Avengers',
+                thumbnail: 'https://68.media.tumblr.com/avatar_6c6969812f44_128.png',
+                members: []
+    		},
+            {
+                name: 'Pirates des Caraïbes',
+                thumbnail: 'https://68.media.tumblr.com/avatar_45c5488df635_128.png',
+                members: []
+    		},
+            {
+                name: 'Seigneur des anneaux',
+                thumbnail: 'https://68.media.tumblr.com/avatar_78fd14b74e9b_128.png',
+                members: []
+    		},
+            {
+                name: 'X-men',
+                thumbnail: 'https://s-media-cache-ak0.pinimg.com/236x/70/ac/54/70ac54ba852c1619d01e21d3e8e57310.jpg',
+                members: []
+    		},
+            {
+                name: 'Minions',
+                thumbnail: 'http://www.coloriageonline.com/img/categorias/156.gif',
+                members: []
+    		},
+            {
+                name: 'Batman',
+                thumbnail: 'https://batman.myheroeshops.com/bundles/heroeshops/images/upload/11_BATMAN.png',
+                members: []
+    		},
+            {
+                name: 'Star Wars',
+                thumbnail: 'https://lh3.googleusercontent.com/XGQzo00WzL4Icoftl_cpogskee7YMnEMmJufCmL7Gntr-MlReH8VJA9V3vVsauNjSDVS=w128',
+                members: []
+    		},
+            {
+                name: 'Tortues Ninjas',
+                thumbnail: 'https://68.media.tumblr.com/avatar_73f604558d8c_128.png',
+                members: []
+    		}
+    	];
 
-    var teams = [
-        {
-            name: 'ToyStory',
-            thumbnail: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQDjMGZaNTEpTuGvCT9e5h8JLQ3xnDHESmP2Rt_r6yfaCSjLfmuJZwyazk',
-            members: []
-		},
-        {
-            name: 'Harry Potter',
-            thumbnail: 'http://www.franckymagie.com/images/technique/tour-de-magie.png',
-            members: []
-		},
-        {
-            name: 'Avengers',
-            thumbnail: 'https://68.media.tumblr.com/avatar_6c6969812f44_128.png',
-            members: []
-		},
-        {
-            name: 'Pirates des Caraïbes',
-            thumbnail: 'https://68.media.tumblr.com/avatar_45c5488df635_128.png',
-            members: []
-		},
-        {
-            name: 'Seigneur des anneaux',
-            thumbnail: 'https://68.media.tumblr.com/avatar_78fd14b74e9b_128.png',
-            members: []
-		},
-        {
-            name: 'X-men',
-            thumbnail: 'https://s-media-cache-ak0.pinimg.com/236x/70/ac/54/70ac54ba852c1619d01e21d3e8e57310.jpg',
-            members: []
-		},
-        {
-            name: 'Minions',
-            thumbnail: 'http://www.coloriageonline.com/img/categorias/156.gif',
-            members: []
-		},
-        {
-            name: 'Batman',
-            thumbnail: 'https://batman.myheroeshops.com/bundles/heroeshops/images/upload/11_BATMAN.png',
-            members: []
-		},
-        {
-            name: 'Star Wars',
-            thumbnail: 'https://lh3.googleusercontent.com/XGQzo00WzL4Icoftl_cpogskee7YMnEMmJufCmL7Gntr-MlReH8VJA9V3vVsauNjSDVS=w128',
-            members: []
-		},
-        {
-            name: 'Tortues Ninjas',
-            thumbnail: 'https://68.media.tumblr.com/avatar_73f604558d8c_128.png',
-            members: []
-		}
-	];
-
-
+    */
     // TEAMS AND MEMBERS INITIALIZATION
     /*
         var antoine = {
@@ -606,47 +606,48 @@ module.exports.bootstrap = function (cb) {
     */
 
     // INITIALIZATION BASED ON OBJECTS DECLARED ABOVE
+    /*
+        function initializePlayer(player1) {
+            Player.initialize(player1, function (err, player1) {
 
-    function initializePlayer(player1) {
-        Player.initialize(player1, function (err, player1) {
+                if (err) sails.log.error(err);
 
-            if (err) sails.log.error(err);
+            });
+        }
 
-        });
-    }
+        function initializeTeams() {
+            // initializePlayer(antoine);
+            // initializePlayer(donovan);
 
-    function initializeTeams() {
-        // initializePlayer(antoine);
-        // initializePlayer(donovan);
+            // initializePlayer(victor);
+            // initializePlayer(adam);
 
-        // initializePlayer(victor);
-        // initializePlayer(adam);
+            // initializePlayer(robin);
+            // initializePlayer(marion);
 
-        // initializePlayer(robin);
-        // initializePlayer(marion);
+            // initializePlayer(hugues);
+            // initializePlayer(amaury);
 
-        // initializePlayer(hugues);
-        // initializePlayer(amaury);
+            // initializePlayer(thomas);
+            // initializePlayer(anne);
 
-        // initializePlayer(thomas);
-        // initializePlayer(anne);
+            // initializePlayer(leo);
+            // initializePlayer(sophy);
 
-        // initializePlayer(leo);
-        // initializePlayer(sophy);
+            // initializePlayer(antoineB);
+            // initializePlayer(joceran);
 
-        // initializePlayer(antoineB);
-        // initializePlayer(joceran);
+            // initializePlayer(maxime);
+            // initializePlayer(aurelien);
 
-        // initializePlayer(maxime);
-        // initializePlayer(aurelien);
+            // initializePlayer(etienne);
+            // initializePlayer(milad);
 
-        // initializePlayer(etienne);
-        // initializePlayer(milad);
+            // initializePlayer(camille);
+            // initializePlayer(alexis);
+        }*/
 
-        // initializePlayer(camille);
-        // initializePlayer(alexis);
-    }
-	/*
+    /*
     Team.create(teams).exec(function (err, teams) {
         if (err) sails.log.error(err);
 
@@ -657,8 +658,8 @@ module.exports.bootstrap = function (cb) {
 
         });
     });*/
-	
-	
+
+
 
     // It's very important to trigger this callback method when you are finished
     // with the bootstrap!  (otherwise your server will never lift, since it's waiting on the bootstrap)

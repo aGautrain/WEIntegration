@@ -23,33 +23,49 @@
 module.exports.routes = {
 
 
-  /***************************************************************************
-  *                                                                          *
-  * Custom routes here...                                                    *
-  *                                                                          *
-  * If a request to a URL doesn't match any of the custom routes above, it   *
-  * is matched against Sails route blueprints. See `config/blueprints.js`    *
-  * for configuration options and examples.                                  *
-  *                                                                          *
-  ***************************************************************************/
+    /***************************************************************************
+     *                                                                          *
+     * Custom routes here...                                                    *
+     *                                                                          *
+     * If a request to a URL doesn't match any of the custom routes above, it   *
+     * is matched against Sails route blueprints. See `config/blueprints.js`    *
+     * for configuration options and examples.                                  *
+     *                                                                          *
+     ***************************************************************************/
 
-  'post /register': 'AccountController.registerUser',
-  'post /login': 'PlayerController.login',
-  'get /me': 'PlayerController.me',
-  'get /logout': 'PlayerController.logout',
-  'post /claim': 'ClaimController.claim',
-  'get /journal': 'ClaimController.story',
-  'get /team': 'TeamController.getTeam',
-  'get /teams': 'TeamController.getTeams',
-  
-  'get /admin/accept': 'ClaimController.accept',
-  'get /admin/refuse': 'ClaimController.refuse',
-  'get /admin/list': 'ClaimController.list',
-  
-  'post /admin/advantage': 'TeamController.setAdvantage',
-  
-  'get /admin/teams': 'TeamController.getAdvantages'
-  
-  
-  
+    
+	// 'post /register': 'AccountController.registerUser',
+    'post /login': 'PlayerController.login',
+    'get /me': 'PlayerController.me',
+    'get /logout': 'PlayerController.logout',
+    // 'post /claim': 'ClaimController.claim',
+    'get /journal': 'ClaimController.story',
+    'get /team': 'TeamController.getTeam',
+    'get /teams': 'TeamController.getTeams',
+    'post /me/thumbnail': 'PlayerController.setThumbnail',
+
+    // Admin routes below -- only available from the admin console
+
+    'get /admin/accept': 'ClaimController.accept',
+    'get /admin/refuse': 'ClaimController.refuse',
+    'get /admin/list': 'ClaimController.list',
+
+    'post /admin/advantage': 'TeamController.setAdvantage',
+    'post /admin/advantage/player': 'PlayerController.setAdvantage',
+
+    'post /admin/note/write': 'NoteController.writeToAll',
+    'post /admin/note/write/player': 'NoteController.writeToPlayer',
+	'post /admin/note/write/team': 'NoteController.writeToTeam',
+
+    'get /admin/teams': 'TeamController.getAdvantages',
+    'get /admin/players': 'PlayerController.getPlayers',
+	'get /admin/notes': 'NoteController.getAllNotes',
+
+    'post /admin/challenge/revert': 'ChallengeController.remove',
+	
+	// cheat road for seeing scores
+	'get /admin/teams/details': 'TeamController.getTeams'
+
+
+
 };

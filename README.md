@@ -1,6 +1,30 @@
-* Subscribe, Login
-* Join a team
-* Claim challenges (with comments)
-* Validate/deny them (with comments) (admin)
-* Get scores and ranks of players & teams
-* Collective challenges claimed only by captain
+# WEIntegration
+*Project allowing students to register themselves and participate to **the game** *
+
+This repository contains 5 sub-folders.
+Here are their respective descriptions :
+* Admin
+  ** Angular 4 web administration platform
+  ** Interface allows special interactions with players :
+    *** Granting points
+    *** Sending messages
+    *** Examining claims
+* Client
+  ** Ionic 2 project providing a mobile application
+  ** Application giving access to **the game**
+    *** Creating account, authentication
+    *** Joining a team
+    *** Participating to challenges
+    *** Visualizing scores
+* Compilation
+  ** Keystore required to build apks
+  ** Apks built
+* Data
+  ** Former databases of the integration
+  ** Bson format for mongodb
+* Server
+  ** Sails.js API server
+  ** Routes available to network
+    *** Public routes
+    *** Routes requiring authentication
+  ** Postman requests for testing
