@@ -1,8 +1,10 @@
 # WEIntegration
-*Project allowing students to register themselves and participate to **the game** *
+## Project allowing students to register themselves and participate to **the game**
+  
 
 This repository contains 5 sub-folders.
 Here are their respective descriptions :
+  
 * Admin
   ** Angular 4 web administration platform
   ** Interface allows special interactions with players :
