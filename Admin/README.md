@@ -2,27 +2,26 @@
 
 This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 1.0.0.
 
-## Development server
 
-Run `ng serve` for a dev server. Navigate to `http://localhost:4200/`. The app will automatically reload if you change any of the source files.
+# Configuration
 
-## Code scaffolding
+The monitoring needs to interact with a REST API (= http server with defined endpoints serving JSON objects)
+Adress of the server is written in /src/app/admin.service.ts
+Replace `const server: string = 'http://151.80.140.30/';` with the one you use
 
-Run `ng generate component component-name` to generate a new component. You can also use `ng generate directive/pipe/service/class/module`.
+> npm install
 
-## Build
 
-Run `ng build` to build the project. The build artifacts will be stored in the `dist/` directory. Use the `-prod` flag for a production build.
+# Test command
 
-## Running unit tests
+> ng serve --open
 
-Run `ng test` to execute the unit tests via [Karma](https://karma-runner.github.io).
+# Build prod command
 
-## Running end-to-end tests
+> ng build --env=prod --base-href=/
 
-Run `ng e2e` to execute the end-to-end tests via [Protractor](http://www.protractortest.org/).
-Before running the tests make sure you are serving the app via `ng serve`.
+! workaround if error with ng build --prod --aot :
+https://github.com/angular/angular-cli/issues/4551
+! easy solution : generate a new project with angular-cli and then copy/paste src
 
-## Further help
-
-To get more help on the Angular CLI use `ng help` or go check out the [Angular CLI README](https://github.com/angular/angular-cli/blob/master/README.md).
+This produces dist folder, allowing you to serve it for your clients !
