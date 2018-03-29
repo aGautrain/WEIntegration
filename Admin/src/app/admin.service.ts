@@ -4,7 +4,9 @@ import 'rxjs/add/operator/toPromise';
 import 'rxjs/add/operator/map';
 import { Claim, Player, Challenge, Team, Note } from './interfaces';
 
-const server: string = 'http://151.80.140.30/';
+import { environment } from '../environments/environment';
+
+const server: string = environment.remoteApiAddress + ':' + environment.remoteApiPort + '/';
 
 @Injectable()
 export class AdminService {
