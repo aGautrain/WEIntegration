@@ -34,11 +34,11 @@ module.exports.routes = {
      ***************************************************************************/
 
     
-	// 'post /register': 'AccountController.registerUser',
+	'post /register': 'AccountController.registerUser',
     'post /login': 'PlayerController.login',
     'get /me': 'PlayerController.me',
     'get /logout': 'PlayerController.logout',
-    // 'post /claim': 'ClaimController.claim',
+    'post /claim': 'ClaimController.claim',
     'get /journal': 'ClaimController.story',
     'get /team': 'TeamController.getTeam',
     'get /teams': 'TeamController.getTeams',

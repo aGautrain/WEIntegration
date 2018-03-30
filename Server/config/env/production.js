@@ -17,22 +17,24 @@ module.exports = {
    * environment (see config/connections.js and config/models.js )           *
    ***************************************************************************/
 
-  // models: {
-  //   connection: 'localMongodbServer'
-  // },
+    models: {
+        connection: 'localMongodbOrMySQLserver'
+    },
 
   /***************************************************************************
    * Set the port in the production environment to 80                        *
    ***************************************************************************/
 
-  // port: 80,
+    port: 80,
 
   /***************************************************************************
-   * Set the log level in production environment to "silent"                 *
+   * Set the log level in production environment ("info" includes info(), debug(), warn() and error())
    ***************************************************************************/
 
-  // log: {
-  //   level: "silent"
-  // }
+    log: {
+        level: "info"
+    },
+    
+    needsBootstrapStep: false
 
 };
