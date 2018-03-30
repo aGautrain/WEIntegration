@@ -1,7 +1,10 @@
+
+# Modules
+**/node_modules/**
+
 # Local files which MUST NOT be sent
 Data/
 Compilation/
-
 
 # Windows image file caches
 Thumbs.db

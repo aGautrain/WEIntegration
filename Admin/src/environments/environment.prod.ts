@@ -1,3 +1,5 @@
 export const environment = {
-  production: true
+  production: true,
+  remoteApiAddress: 'YOUR_API',
+  remoteApiPort: 80
 };
