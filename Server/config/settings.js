@@ -6,5 +6,6 @@ module.exports.settings = {
 		"team": 'En équipe',
 		"old": 'Beauf',
 		"sexy": 'Hot'
-	}
+	},
+    needsBootstrap: true
 };

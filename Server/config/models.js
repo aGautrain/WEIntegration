@@ -17,7 +17,7 @@ module.exports.models = {
   * connections (see `config/connections.js`)                                *
   *                                                                          *
   ***************************************************************************/
-  connection: 'localMongodbServer',
+  connection: 'localDiskDb',
 
   /***************************************************************************
   *                                                                          *
@@ -27,7 +27,7 @@ module.exports.models = {
   * See http://sailsjs.org/#!/documentation/concepts/ORM/model-settings.html  *
   *                                                                          *
   ***************************************************************************/
-  // TODO : change on production
-  migrate: 'safe'
+  // TODO : change on production for 'safe' value
+  migrate: 'drop'
 
 };

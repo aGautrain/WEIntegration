@@ -8,6 +8,8 @@
  * @docs        :: http://sailsjs.org/documentation/concepts/models-and-orm/models
  */
 
+const sha256 = require('sha256');
+
 module.exports = {
 
     autoPK: false,
@@ -48,7 +50,7 @@ module.exports = {
 
             Account.create({
                 email: user.email,
-                password: user.password,
+                password: sha256(user.password),
                 playerRef: player.id
             }).exec(function (err, account) {
                 if (err) return cb(err);
