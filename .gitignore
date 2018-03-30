@@ -1,3 +1,8 @@
+# Local files which MUST NOT be sent
+Data/
+Compilation/
+
+
 # Windows image file caches
 Thumbs.db
 ehthumbs.db
