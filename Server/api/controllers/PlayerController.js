@@ -4,6 +4,7 @@
  * @description :: Server-side logic for managing Players
  * @help        :: See http://sailsjs.org/#!/documentation/concepts/Controllers
  */
+const sha256 = require('sha256');
 
 module.exports = {
 
@@ -21,7 +22,7 @@ module.exports = {
         // find a match
         Account.findOne({
                 email: req.body['email'],
-                password: req.body['password']
+                password: sha256(req.body['password'])
             })
             .populate('playerRef')
             .exec(function (err, account) {
