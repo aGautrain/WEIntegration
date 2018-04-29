@@ -173,7 +173,7 @@
                 <td>{{player?.advantage}}</td>
                 <td>{{player?.firstName}} {{player?.name}}</td>
                 <td>
-                    <span class="fa-stack fa-lg yellow actions">
+                    <span (click)="advantagePlayer(player)" class="fa-stack fa-lg yellow actions">
                         <i class="fa fa-square fa-stack-2x"></i>
                         <i class="fa fa-trophy fa-stack-1x fa-inverse"></i>
                     </span>
@@ -227,7 +227,7 @@
           {{ note?.content }}
         </p>
         <p *ngIf="getEntityNotes().length === 0">
-            <b>There is no notes.</b>  
+            <b>There is no notes.</b>
         </p>
       </div>
       <div class="modal-footer">
